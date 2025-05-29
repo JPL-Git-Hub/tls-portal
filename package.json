@@ -1,0 +1,46 @@
+{
+  "name": "tls-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TLS Client Portal System - Modular Monolith",
+  "workspaces": [
+    "src/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn workspace @tls-portal/creator dev\" \"yarn workspace @tls-portal/pages dev\"",
+    "dev:all": "concurrently \"yarn workspace @tls-portal/auth dev\" \"yarn workspace @tls-portal/creator dev\" \"yarn workspace @tls-portal/pages dev\"",
+    "dev:backend": "yarn workspace @tls-portal/creator dev",
+    "dev:frontend": "yarn workspace @tls-portal/pages dev",
+    "build": "yarn workspaces run build",
+    "test": "yarn workspaces run test",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "clean": "yarn workspaces run clean && rimraf node_modules",
+    "docker:build": "docker build -t tls-portal .",
+    "docker:run": "docker run -p 8080:8080 tls-portal"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.2.4",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "resolutions": {
+    "eslint": "^8.56.0",
+    "node-fetch": "^2.7.0",
+    "@types/node": "^20.11.0"
+  }
+}

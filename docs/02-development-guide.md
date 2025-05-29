@@ -1,0 +1,198 @@
+# TLS Portal Development Guide
+
+## Overview
+
+This guide describes the TLS Portal system, a modular monolith with automatic client subdomain generation for law firm client portals. The system handles up to 5,000 client portals with 25 active simultaneously.
+
+## Architecture
+
+### Modular Monolith Design
+
+The project follows a modular monolith architecture with clean separation of concerns:
+- **auth**: Authentication functionality
+- **creator**: Portal creation and client management
+- **forms**: Form interfaces for intake
+- **pages**: React frontend portal interface
+- **router**: Subdomain routing logic
+- **shared**: Shared utilities, types, and configuration
+
+All modules communicate via direct imports within the monolith, maintaining clean boundaries without deployment separation.
+
+### Technology Stack
+
+See [03-tech-stack.md](03-tech-stack.md) for detailed technology decisions and architecture.
+
+**Key versions in use:**
+- TypeScript: 5.3.3
+- React: 18.2.0
+- Node.js: >= 18.0.0
+- Yarn Classic: 1.22.x
+
+## Setup
+
+See [01-setup.md](01-setup.md) for complete installation instructions, prerequisites, and troubleshooting.
+
+## Key Features
+
+### Client Subdomain System
+
+Each client receives a unique subdomain:
+- **Format**: First 4 letters of last name + last 4 digits of mobile
+- **Padding**: Short names padded with 'x' (e.g., "Li" → "lixx")
+- **Uniqueness**: Automatic suffix for duplicates
+- **Validation**: Enforced 4-letter + 4-digit pattern
+
+Examples:
+- John Smith (212) 555-1234 → smit1234.thelawshop.com
+- Amy Li (415) 555-0001 → lixx0001.thelawshop.com
+- Patrick O'Brien (555) 555-4321 → obri4321.thelawshop.com
+
+### Client Intake Form
+
+React-based form with comprehensive validation:
+- **Fields**: First Name, Last Name, Email, Mobile
+- **Phone Formatting**: Automatic (XXX) XXX-XXXX format
+- **Validation**: Zod schemas with real-time feedback
+- **Name Processing**: Proper case formatting, apostrophe handling
+- **API Integration**: RESTful endpoint at /api/clients
+
+### Multi-Tenant Security
+
+Firestore rules ensure complete tenant isolation with proper access control within tenant boundaries.
+
+## Development
+
+### Starting the Environment
+
+```bash
+# Full development with emulators
+./scripts/dev-local.sh
+
+# Development without emulators
+./scripts/dev.sh
+
+# Minimal development mode
+./scripts/dev-simple.sh
+```
+
+Service URLs:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:3001
+- Emulator UI: http://localhost:4000 (when using emulators)
+
+### Common Tasks
+
+```bash
+# Code quality
+yarn lint          # ESLint checking
+yarn format        # Prettier formatting
+yarn typecheck     # TypeScript validation
+
+# Testing
+yarn test          # Run test suites
+
+# Building
+yarn build         # Production build
+yarn docker:build  # Container image
+```
+
+See [01-setup.md](01-setup.md#available-scripts) for additional scripts and commands.
+
+### Package Management
+
+**Important**: This project uses Yarn Classic (1.x) with workspaces. Always use `yarn` instead of `npm` for package management to ensure proper workspace resolution and avoid lockfile conflicts.
+
+```bash
+# Add to specific workspace
+yarn workspace @tls-portal/creator add [package]
+
+# Add to root
+yarn add -D -W [package]
+
+# Run workspace script
+yarn workspace @tls-portal/pages dev
+
+# Install all dependencies
+yarn install  # NOT npm install
+```
+
+## Configuration
+
+### Environment Variables
+
+See [04-environment-variables.md](04-environment-variables.md) for configuration details.
+
+### Yarn Configuration
+
+The .yarnrc file optimizes the development experience by suppressing compatibility warnings and preventing timeout errors.
+
+### TypeScript Configuration
+
+Balanced for productivity and type safety with strict mode enabled but allowing implicit any for rapid development.
+
+## Script Architecture
+
+### Centralized Libraries
+
+The scripts/lib directory contains reusable bash utilities:
+- **colors.sh** - Consistent terminal output formatting
+- **config.sh** - Shared configuration values
+- **utils.sh** - Common functions (validation, setup, cleanup)
+- **gcloud.sh** - Google Cloud operations
+
+### Key Scripts
+
+- **init-all.sh** - Master setup orchestration
+- **check-prerequisites.sh** - System requirement validation
+- **ensure-yarn-config.sh** - Yarn configuration management
+- **validate-setup.sh** - Project health verification
+- **check-warnings.sh** - Development warning analysis
+
+## Deployment
+
+### Docker Configuration
+
+Multi-stage build for optimization with separate build and production stages.
+
+### Google Cloud Run
+
+Deploy using standard Google Cloud commands after building and pushing the container image.
+
+## Monitoring & Maintenance
+
+### Health Checks
+
+- Backend health endpoint: /health
+- Automatic Cloud Run health monitoring
+- Structured logging for debugging
+
+### Performance Optimization
+
+- Vite code splitting for optimal bundle sizes
+- Compression middleware for response optimization
+- Firestore query indexing for faster data access
+- React Query caching for reduced API calls
+
+### Security
+
+- Helmet security headers
+- CORS configuration for subdomain isolation
+- Firebase Authentication with custom claims
+- Firestore security rules for data protection
+- Environment-based secret management
+
+## Next Development Phases
+
+1. **Authentication System** - Complete Firebase Auth integration
+2. **Subdomain Routing** - Express-subdomain implementation
+3. **Client Dashboard** - Portal interface development
+4. **Document Management** - File upload and storage
+5. **Notification System** - Email and in-app notifications
+6. **Analytics Dashboard** - Usage tracking and reporting
+
+## References
+
+- [Tech Stack Documentation](03-tech-stack.md)
+- [Setup Instructions](01-setup.md)
+- [Environment Configuration](04-environment-variables.md)
+- API Documentation (coming soon)
