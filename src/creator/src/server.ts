@@ -53,7 +53,7 @@ app.get('/health', (req, res) => {
 app.use('/api/clients', clientRoutes);
 
 // Serve static files in production
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+if (process.env.NODE_ENV === 'production') {
   const publicPath = path.join(__dirname, '../../../public');
   app.use(express.static(publicPath));
   

@@ -2,7 +2,7 @@
 set -e
 
 # Deployment script for TLS Portal
-# Handles staging and production deployments to Google Cloud Run
+# Simple production deployment - no staging needed (YAGNI)
 
 # Get script directory and project root
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -13,16 +13,14 @@ source "$script_dir/lib/utils.sh"
 source "$script_dir/lib/config.sh"
 
 # Configuration
-STAGING_PROJECT="tls-portal-staging"
 PROD_PROJECT="tls-portal-prod"
 REGION="us-central1"
 SERVICE_NAME="tls-portal"
 
 # Usage function
 usage() {
-    echo "Usage: $0 [staging|prod]"
-    echo "  staging - Deploy to staging environment"
-    echo "  prod    - Deploy to production environment"
+    echo "Usage: $0 prod"
+    echo "  prod - Deploy to production environment"
     exit 1
 }
 
@@ -54,43 +52,6 @@ build_container() {
     docker build -t $SERVICE_NAME:latest . || die "Docker build failed"
     
     log_success "Container built successfully"
-}
-
-# Deploy to staging
-deploy_staging() {
-    section "Deploying to Staging"
-    
-    # Tag for staging
-    local image_tag="gcr.io/$STAGING_PROJECT/$SERVICE_NAME:latest"
-    docker tag $SERVICE_NAME:latest $image_tag
-    
-    # Push to registry
-    log_info "Pushing to Google Container Registry..."
-    docker push $image_tag || die "Failed to push image"
-    
-    # Deploy to Cloud Run
-    log_info "Deploying to Cloud Run..."
-    gcloud run deploy $SERVICE_NAME \
-        --image $image_tag \
-        --platform managed \
-        --region $REGION \
-        --project $STAGING_PROJECT \
-        --allow-unauthenticated \
-        --service-account="$SERVICE_NAME@$STAGING_PROJECT.iam.gserviceaccount.com" \
-        --set-env-vars="NODE_ENV=staging,FIREBASE_PROJECT_ID=$STAGING_PROJECT" \
-        --set-secrets="FIREBASE_SERVICE_ACCOUNT=firebase-service-account:latest" \
-        --memory=512Mi \
-        --cpu=1 \
-        || die "Cloud Run deployment failed"
-    
-    # Get service URL
-    local service_url=$(gcloud run services describe $SERVICE_NAME \
-        --platform managed \
-        --region $REGION \
-        --project $STAGING_PROJECT \
-        --format 'value(status.url)')
-    
-    log_success "Deployed to staging: $service_url"
 }
 
 # Deploy to production
@@ -163,30 +124,18 @@ health_check() {
 main() {
     local environment=$1
     
-    if [ -z "$environment" ]; then
+    if [ -z "$environment" ] || [ "$environment" != "prod" ]; then
         usage
     fi
     
     echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
-    echo -e "${GREEN}          TLS Portal Deployment                     ${NC}"
+    echo -e "${GREEN}       TLS Portal Production Deployment             ${NC}"
     echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
     echo
     
     check_prerequisites
     build_container
-    
-    case $environment in
-        staging)
-            deploy_staging
-            ;;
-        prod|production)
-            deploy_production
-            ;;
-        *)
-            log_error "Invalid environment: $environment"
-            usage
-            ;;
-    esac
+    deploy_production
     
     log_success "Deployment completed!"
 }

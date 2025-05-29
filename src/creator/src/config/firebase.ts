@@ -11,8 +11,8 @@ export function initializeFirebase() {
   if (initialized) return;
 
   try {
-    // In production/staging, use default credentials from service account
-    if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+    // In production, use default credentials from service account
+    if (process.env.NODE_ENV === 'production') {
       // Cloud Run automatically uses the service account credentials
       initializeApp();
     } else {
