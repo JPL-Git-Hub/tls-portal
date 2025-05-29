@@ -125,7 +125,7 @@ main() {
     
     # Check Firebase project
     if [ -f "$project_root/.env" ] && grep -q "FIREBASE_PROJECT_ID=" "$project_root/.env" 2>/dev/null; then
-        local project_id=$(grep "FIREBASE_PROJECT_ID=" "$project_root/.env" 2>/dev/null | cut -d= -f2)
+        local project_id=$(grep "FIREBASE_PROJECT_ID=" "$project_root/.env" 2>/dev/null | cut -d= -f2 || true)
         if [ "$project_id" != "your-project-id" ] && [ -n "$project_id" ]; then
             log_success "Firebase project configured: $project_id"
         else

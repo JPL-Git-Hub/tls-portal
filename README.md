@@ -10,7 +10,10 @@ A modular monolith client portal system with automatic subdomain generation for 
 - ❌ Don't use: `npm install`, `npm add`, `npm remove`
 - ❌ Don't use: `npx` for running packages
 
-The project has safeguards to prevent accidental npm usage, but `npx` can bypass these checks.
+The project has multiple safeguards to prevent npm/npx usage:
+- Pre-install hooks block `npm install`
+- Pre-script hooks catch `npm run` commands  
+- Local `npm` and `npx` wrapper scripts block direct usage
 
 ## 🚀 Quick Start
 
