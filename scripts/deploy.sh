@@ -17,6 +17,16 @@ PROD_PROJECT="tls-portal-prod"
 REGION="us-central1"
 SERVICE_NAME="tls-portal"
 
+# Find gcloud command
+GCLOUD_CMD=""
+if command -v gcloud >/dev/null 2>&1; then
+    GCLOUD_CMD="gcloud"
+elif [ -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
+    GCLOUD_CMD="/Users/josephleon/google-cloud-sdk/bin/gcloud"
+else
+    die "Google Cloud SDK not found. Install from https://cloud.google.com/sdk"
+fi
+
 # Usage function
 usage() {
     echo "Usage: $0 prod"
@@ -34,7 +44,7 @@ check_prerequisites() {
     fi
     
     # Check gcloud
-    if ! command -v gcloud >/dev/null 2>&1; then
+    if [ -z "$GCLOUD_CMD" ]; then
         die "Google Cloud SDK is required but not installed"
     fi
     
@@ -76,7 +86,7 @@ deploy_production() {
     
     # Deploy to Cloud Run
     log_info "Deploying to Cloud Run..."
-    gcloud run deploy $SERVICE_NAME \
+    $GCLOUD_CMD run deploy $SERVICE_NAME \
         --image $image_tag \
         --platform managed \
         --region $REGION \
@@ -92,7 +102,7 @@ deploy_production() {
         || die "Cloud Run deployment failed"
     
     # Get service URL
-    local service_url=$(gcloud run services describe $SERVICE_NAME \
+    local service_url=$($GCLOUD_CMD run services describe $SERVICE_NAME \
         --platform managed \
         --region $REGION \
         --project $PROD_PROJECT \

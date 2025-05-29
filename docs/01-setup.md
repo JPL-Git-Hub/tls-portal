@@ -125,15 +125,20 @@ source ~/.zshrc
 ### Start Development Servers
 
 ```bash
-# With emulators (requires Java)
-./scripts/dev-local.sh
+# With Firebase emulators (recommended, requires Java)
+./scripts/dev-emulators.sh
 
-# Without emulators
+# Without emulators (uses real Firebase project)
 ./scripts/dev.sh
-
-# Simple mode (no emulators, minimal output)
-./scripts/dev-simple.sh
 ```
+
+The emulator setup provides:
+- Local Firestore database (port 8080)
+- Local Auth service (port 9099)
+- Local Storage (port 9199)
+- Emulator UI at http://localhost:4000
+
+This allows fast iteration without affecting production data.
 
 ### Available Scripts
 

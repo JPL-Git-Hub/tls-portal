@@ -68,8 +68,18 @@ main() {
     fi
     
     # Google Cloud SDK
+    local gcloud_cmd=""
     if command -v gcloud >/dev/null 2>&1; then
-        log_success "Google Cloud SDK: $(gcloud --version | head -1)"
+        gcloud_cmd="gcloud"
+    elif [ -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
+        gcloud_cmd="/Users/josephleon/google-cloud-sdk/bin/gcloud"
+    fi
+    
+    if [ -n "$gcloud_cmd" ]; then
+        log_success "Google Cloud SDK: $($gcloud_cmd --version | head -1)"
+        if [ "$gcloud_cmd" = "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
+            log_info "  Note: Add to PATH with: echo 'export PATH=\"/Users/josephleon/google-cloud-sdk/bin:\$PATH\"' >> ~/.zshrc"
+        fi
     else
         log_error "Google Cloud SDK not found"
         echo "  Install: https://cloud.google.com/sdk"
