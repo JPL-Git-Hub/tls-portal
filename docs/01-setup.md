@@ -18,13 +18,13 @@ git clone <repository-url>
 cd tls-portal
 
 # 2. Check prerequisites
-./scripts/check-prerequisites.sh
+./scripts/check-cli-prerequisites.sh
 
 # 3. Run complete setup
 ./scripts/init-all.sh
 
 # 4. Start development
-./scripts/dev.sh
+./scripts/start-dev.sh
 ```
 
 ## Prerequisites
@@ -65,7 +65,7 @@ cd tls-portal
 Run the prerequisites checker to ensure your system is ready:
 
 ```bash
-./scripts/check-prerequisites.sh
+./scripts/check-cli-prerequisites.sh
 ```
 
 This will check all required and optional software and provide installation instructions for anything missing.
@@ -135,11 +135,14 @@ source ~/.zshrc
 ### Start Development Servers
 
 ```bash
-# With Firebase emulators (recommended, requires Java)
-./scripts/dev-emulators.sh
+# Start all development services
+./scripts/start-dev.sh
 
-# Without emulators (uses real Firebase project)
-./scripts/dev.sh
+# Check service status
+./scripts/check-dev-status.sh
+
+# Stop all services (when done)
+./scripts/stop-dev.sh
 ```
 
 The emulator setup provides:

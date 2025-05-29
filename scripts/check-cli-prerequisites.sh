@@ -17,6 +17,8 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Source utilities for dynamic path detection
 source "$SCRIPT_DIR/lib/gcloud.sh"
+source "$SCRIPT_DIR/lib/java.sh"
+source "$SCRIPT_DIR/lib/utils.sh"
 
 echo -e "${GREEN}=== Checking CLI Prerequisites ===${NC}"
 echo "Verifying tools for AI-assisted development..."
@@ -93,6 +95,15 @@ check_command "http-server" "Static file server for standalone tests" false
 echo -e "\n${YELLOW}Firebase Development:${NC}"
 check_command "firebase" "Firebase CLI for emulators and deployment" false
 
+# Java for Firebase emulators
+if setup_java 11 >/dev/null 2>&1; then
+    echo -e "${GREEN}✓ java${NC} - Java runtime for Firebase emulators"
+    echo "  Version: $(get_java_version)"
+else
+    echo -e "${YELLOW}⚠ java${NC} - Java 11+ needed for Firebase emulators ${YELLOW}[OPTIONAL]${NC}"
+    ((warning_count++))
+fi
+
 # Google Cloud tools
 check_gcloud
 
@@ -141,6 +152,11 @@ if [ $missing_count -gt 0 ] || [ $warning_count -gt 0 ]; then
     # Check if we need gcloud
     if ! check_gcloud; then
         echo -e "  ${YELLOW}gcloud:${NC} https://cloud.google.com/sdk/docs/install"
+    fi
+    
+    # Check if we need Java
+    if ! setup_java 11 >/dev/null 2>&1; then
+        echo -e "  ${YELLOW}java:${NC} brew install openjdk (macOS) or https://adoptium.net/"
     fi
 fi
 

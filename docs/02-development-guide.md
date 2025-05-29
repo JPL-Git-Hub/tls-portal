@@ -65,14 +65,14 @@ Firestore rules ensure complete tenant isolation with proper access control with
 ### Starting the Environment
 
 ```bash
-# Full development with emulators
-./scripts/dev-local.sh
+# Start all development services
+./scripts/start-dev.sh
 
-# Development without emulators
-./scripts/dev.sh
+# Check service status
+./scripts/check-dev-status.sh
 
-# Minimal development mode
-./scripts/dev-simple.sh
+# Stop all services
+./scripts/stop-dev.sh
 ```
 
 Service URLs:

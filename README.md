@@ -18,8 +18,9 @@ The project has multiple safeguards to prevent npm/npx usage:
 ## 🚀 Quick Start
 
 ```bash
-./scripts/init-all.sh   # Setup everything
-./scripts/dev.sh        # Start development
+./scripts/init-all.sh      # Setup everything
+./scripts/start-dev.sh     # Start development environment
+./scripts/check-dev-status.sh  # Check service status
 ```
 
 See [docs/01-setup.md](docs/01-setup.md) for detailed setup instructions and prerequisites.

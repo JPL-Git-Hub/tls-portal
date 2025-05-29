@@ -118,10 +118,9 @@ show_next_steps() {
     echo
     echo "To start development:"
     echo -e "  ${CYAN}cd $project_root${NC}"
-    echo -e "  ${CYAN}./scripts/dev.sh${NC}"
-    echo
-    echo "To use Firebase emulators:"
-    echo -e "  ${CYAN}./scripts/dev-firebase.sh${NC}"
+    echo -e "  ${CYAN}./scripts/start-dev.sh${NC}       - Start all services"
+    echo -e "  ${CYAN}./scripts/check-dev-status.sh${NC} - Check service status"
+    echo -e "  ${CYAN}./scripts/stop-dev.sh${NC}        - Stop all services"
     echo
     echo "Available commands:"
     echo -e "  ${CYAN}yarn dev${NC}         - Start frontend and backend"

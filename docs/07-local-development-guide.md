@@ -21,22 +21,16 @@ The standard port allocation for local development:
 
 ### Starting the Development Environment
 
-#### Full Stack with Emulators
+#### Local Development (Always with Emulators)
 ```bash
-./scripts/dev-firebase.sh
+./scripts/start-dev.sh
 ```
 This starts:
-- Firebase emulators
+- Firebase emulators (Auth, Firestore, Storage)
 - Backend API server
 - Frontend development server
 
-#### Without Emulators
-```bash
-./scripts/dev.sh
-```
-Starts only:
-- Backend API server
-- Frontend development server
+**Note:** Emulators are essential for local development to avoid using production Firebase services. The only time you run without emulators is in cloud deployments.
 
 #### Individual Services
 ```bash

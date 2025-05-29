@@ -17,4 +17,4 @@ fi
 # Start frontend
 echo "Starting frontend on port 3000..."
 cd src/pages
-npx vite --host
+yarn vite --host
