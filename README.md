@@ -6,9 +6,11 @@ A modular monolith client portal system with automatic subdomain generation for 
 
 **This is a Yarn workspace monorepo. Please use Yarn exclusively for all package management:**
 - ✅ Use: `yarn install`, `yarn add`, `yarn remove`
+- ✅ Use: `yarn <package>` instead of `npx <package>`
 - ❌ Don't use: `npm install`, `npm add`, `npm remove`
+- ❌ Don't use: `npx` for running packages
 
-The project has safeguards to prevent accidental npm usage.
+The project has safeguards to prevent accidental npm usage, but `npx` can bypass these checks.
 
 ## 🚀 Quick Start
 

@@ -122,7 +122,7 @@ health_check() {
     sleep 5
     
     # Check health endpoint
-    if curl -s "$url/health" | grep -q "healthy"; then
+    if curl -s "$url/health" 2>/dev/null | grep -q "healthy" 2>/dev/null; then
         log_success "Health check passed"
     else
         log_error "Health check failed"

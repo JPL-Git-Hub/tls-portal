@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node ../../scripts/lib/check-yarn-only.js",
+    "prebuild": "node ../../scripts/lib/check-yarn-only.js",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

@@ -100,7 +100,7 @@ See [01-setup.md](01-setup.md#available-scripts) for additional scripts and comm
 
 ### Package Management
 
-**Important**: This project uses Yarn Classic (1.x) with workspaces. Always use `yarn` instead of `npm` for package management to ensure proper workspace resolution and avoid lockfile conflicts.
+**Important**: This project uses Yarn Classic (1.x) with workspaces. Always use `yarn` instead of `npm` or `npx` for package management to ensure proper workspace resolution and avoid lockfile conflicts.
 
 ```bash
 # Add to specific workspace
@@ -114,7 +114,17 @@ yarn workspace @tls-portal/pages dev
 
 # Install all dependencies
 yarn install  # NOT npm install
+
+# Run package binaries (instead of npx)
+yarn vite         # NOT: npx vite
+yarn tsc          # NOT: npx tsc
+yarn eslint .     # NOT: npx eslint .
 ```
+
+**⚠️ Warning**: Never use `npm` or `npx` - they bypass our Yarn workspace configuration and can cause:
+- Version mismatches with yarn.lock
+- Broken workspace symlinks
+- Inconsistent node_modules structure
 
 ## Configuration
 

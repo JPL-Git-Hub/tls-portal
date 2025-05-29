@@ -85,7 +85,7 @@ get_gcloud_version() {
 # Check if gcloud is authenticated
 check_gcloud_auth() {
     if check_gcloud; then
-        if gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q .; then
+        if gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null | grep -q . 2>/dev/null; then
             return 0
         else
             return 1
