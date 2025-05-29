@@ -71,8 +71,6 @@ start_emulators() {
     if [ $attempt -gt $max_attempts ]; then
         die "Emulators failed to start. Check /tmp/firebase-emulators.log"
     fi
-    
-    return $emulator_pid
 }
 
 # Start development servers

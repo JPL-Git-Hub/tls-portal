@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { createClientSchema, type CreateClientDto } from '@tls-portal/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,6 +27,10 @@ export default function ClientIntakeForm() {
   } = useForm<CreateClientDto>({
     resolver: zodResolver(createClientSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobile: '',
       source: 'web_form'
     }
   });
@@ -45,7 +49,7 @@ export default function ClientIntakeForm() {
     }
   });
 
-  const onSubmit = (data: CreateClientDto) => {
+  const onSubmit: SubmitHandler<CreateClientDto> = (data) => {
     createClient.mutate(data);
   };
 
