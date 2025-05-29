@@ -76,7 +76,11 @@ deploy_staging() {
         --region $REGION \
         --project $STAGING_PROJECT \
         --allow-unauthenticated \
-        --set-env-vars="NODE_ENV=staging" \
+        --service-account="$SERVICE_NAME@$STAGING_PROJECT.iam.gserviceaccount.com" \
+        --set-env-vars="NODE_ENV=staging,FIREBASE_PROJECT_ID=$STAGING_PROJECT" \
+        --set-secrets="FIREBASE_SERVICE_ACCOUNT=firebase-service-account:latest" \
+        --memory=512Mi \
+        --cpu=1 \
         || die "Cloud Run deployment failed"
     
     # Get service URL
@@ -117,9 +121,13 @@ deploy_production() {
         --region $REGION \
         --project $PROD_PROJECT \
         --allow-unauthenticated \
+        --service-account="$SERVICE_NAME@$PROD_PROJECT.iam.gserviceaccount.com" \
         --min-instances 1 \
         --max-instances 100 \
-        --set-env-vars="NODE_ENV=production" \
+        --set-env-vars="NODE_ENV=production,FIREBASE_PROJECT_ID=$PROD_PROJECT,DOMAIN=thelawshop.com" \
+        --set-secrets="FIREBASE_SERVICE_ACCOUNT=firebase-service-account:latest" \
+        --memory=512Mi \
+        --cpu=1 \
         || die "Cloud Run deployment failed"
     
     # Get service URL

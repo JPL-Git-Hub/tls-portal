@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 import dotenv from 'dotenv';
+import path from 'path';
 import { initializeFirebase } from './config/firebase';
 import { errorHandler } from './middleware/errorHandler';
 import { clientRoutes } from './routes/clients';
@@ -50,6 +51,17 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/clients', clientRoutes);
+
+// Serve static files in production
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+  const publicPath = path.join(__dirname, '../../../public');
+  app.use(express.static(publicPath));
+  
+  // Catch all route - serve React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+  });
+}
 
 // Error handling
 app.use(errorHandler);

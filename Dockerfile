@@ -11,16 +11,20 @@ WORKDIR /app
 
 # Copy package files
 COPY package.json yarn.lock ./
-COPY src/*/package.json ./src/
+COPY src/shared/package.json ./src/shared/
+COPY src/creator/package.json ./src/creator/
+COPY src/pages/package.json ./src/pages/
 
-# Install dependencies
+# Install all dependencies
 RUN yarn install --frozen-lockfile
 
 # Copy source code
 COPY . .
 
 # Build all packages
-RUN yarn build
+RUN yarn workspace @tls-portal/shared typecheck && \
+    yarn workspace @tls-portal/creator build && \
+    yarn workspace @tls-portal/pages build
 
 # Stage 2: Production stage
 FROM node:18-alpine
@@ -37,16 +41,21 @@ WORKDIR /app
 
 # Copy package files
 COPY package.json yarn.lock ./
-COPY src/*/package.json ./src/
+COPY src/shared/package.json ./src/shared/
+COPY src/creator/package.json ./src/creator/
 
 # Install production dependencies only
 RUN yarn install --frozen-lockfile --production && \
     yarn cache clean
 
-# Copy built files from builder
-COPY --from=builder /app/src/*/dist ./src/
+# Copy built backend files
+COPY --from=builder /app/src/creator/dist ./src/creator/dist
+COPY --from=builder /app/src/shared ./src/shared
 
-# Copy necessary files
+# Copy built frontend files to be served by Express
+COPY --from=builder /app/src/pages/dist ./public
+
+# Copy necessary config files
 COPY firebase.json ./
 COPY firestore.rules ./
 COPY storage.rules ./
@@ -57,11 +66,11 @@ RUN chown -R nodejs:nodejs /app
 # Switch to non-root user
 USER nodejs
 
-# Expose backend port
-EXPOSE 3001
+# Expose Cloud Run port
+EXPOSE 8080
 
 # Use tini for proper signal handling
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # Start the backend server
-CMD ["node", "src/creator/dist/index.js"]
+CMD ["node", "src/creator/dist/server.js"]

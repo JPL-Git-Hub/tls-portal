@@ -11,11 +11,12 @@ export function initializeFirebase() {
   if (initialized) return;
 
   try {
-    // In production, use default credentials
-    if (process.env.NODE_ENV === 'production') {
+    // In production/staging, use default credentials from service account
+    if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
+      // Cloud Run automatically uses the service account credentials
       initializeApp();
     } else {
-      // In development, use service account or emulators
+      // In development, use project ID and connect to emulators if available
       const projectId = process.env.FIREBASE_PROJECT_ID || 'tls-portal-dev';
       
       initializeApp({
