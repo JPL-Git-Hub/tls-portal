@@ -9,12 +9,12 @@ This project is intended for deployment in production mode as a unified system, 
 ### Code Organization
 
 Monorepo structure containing a modular monolith with clean separation of concerns:
-- **auth**: Authentication functionality
-- **pages**: React frontend portal interface
-- **creator**: Portal creation functionality
-- **router**: Subdomain routing logic
-- **forms**: Form interfaces for intake
-- **shared**: Shared utilities, types, and configuration
+- **pages**: React frontend portal interface (implemented)
+- **creator**: Portal creation functionality (implemented)
+- **shared**: Shared utilities, types, and configuration (implemented)
+- **auth**: Authentication functionality (planned - module scaffolded but not implemented)
+- **router**: Subdomain routing logic (planned - module scaffolded but not implemented)
+- **forms**: Form interfaces for intake (planned - module scaffolded but not implemented)
 
 All components communicate via direct imports within the monolith, maintaining clean boundaries without deployment separation.
 
@@ -37,11 +37,11 @@ The shared module contains:
 - **TypeScript** with balanced configuration for AI-assisted development
 - **Express.js** for API server framework with middleware optimizations:
   - Helmet for security headers
-  - Compression for response optimization
+  - Compression for response optimization (currently disabled due to TypeScript compatibility issue)
   - CORS middleware for wildcard subdomain communication
 - **Firebase Admin SDK** for backend services and multi-tenant data management
 - **Vitest** for testing focusing on critical user flows
-- **Express-subdomain** package for routing based on client-specific subdomains
+- **Express-subdomain** package for routing based on client-specific subdomains (planned - router module not yet implemented)
 - **ts-node** for running TypeScript files directly
 
 ### Frontend
@@ -53,7 +53,7 @@ The shared module contains:
 - **React Query** for data fetching with automatic caching
 - **Zustand** for lightweight state management
 - **React Router** for navigation with code splitting
-- **Custom Firebase Auth wrapper**
+- **Firebase Authentication** integration (planned - auth module not yet implemented)
 - **React Hook Form** for client intake forms with Zod validation
 
 ### Database & Authentication
@@ -77,7 +77,7 @@ The shared module contains:
 - **Zod** for schema validation across frontend and backend
 - **Axios** for HTTP requests with interceptors
 - **libphonenumber-js** for phone number parsing and formatting
-- Custom address validation utilities with flexible format handling
+- **React Hook Form** with Zod validation for comprehensive form handling
 - **Google Secrets Manager** for credential management
 
 ### CI/CD
@@ -111,7 +111,7 @@ The shared module contains:
 
 ### Performance & Optimization
 - **Cloudflare** for edge capabilities including static asset caching and API response caching
-- **Express Backend Optimizations** with compression middleware, helmet security headers, request validation, and efficient routing
+- **Express Backend Optimizations** with helmet security headers, request validation, and efficient routing (compression middleware disabled due to TypeScript issue)
 - **Firestore Optimizations** with collection indexing and document batching
 - **Frontend Build Optimizations** via Vite configuration for code splitting, lazy loading, and content hashing
 - **Caching Strategy** relying on Cloudflare edge caching
@@ -125,14 +125,21 @@ The shared module contains:
 ### Form & Data Processing
 - **React Hook Form** with Zod resolver integration
 - **libphonenumber-js** for automatic phone formatting
-- Custom address validation with configurable rules
+- Form validation using React Hook Form with Zod schemas
 
 ### CLI Utilities
-- **jq** - JSON processor
-- **httpie** - Friendly HTTP client
-- **http-server** - Static file preview server
-- **git-extras** - Useful Git commands
-- **GitHub CLI (gh)** - GitHub management
+
+#### Essential for AI-Assisted Development
+- **jq** - JSON processor for parsing config files and API responses
+- **GitHub CLI (gh)** - Repository management (configured)
+
+#### For API Testing & Debugging  
+- **httpie** - Testing client intake API (localhost:3001/api/clients) and Firebase emulator endpoints
+- **http-server** - Serving standalone test files (minimal use - Firebase emulators handle most serving)
+
+#### Deployment Tools (Configured)
+- **Firebase CLI** - Firebase project management
+- **Google Cloud SDK** - Cloud resource management
 
 ### Security & Compliance
 - **Google Cloud Storage** for document management with AES-256 encryption, bucket-level access controls, regional storage, and configurable retention policies

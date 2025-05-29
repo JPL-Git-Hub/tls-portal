@@ -19,7 +19,8 @@
     "sourceMap": true,
     "baseUrl": "./",
     "paths": {
-      "@tls-portal/*": ["src/*"]
+      "@tls-portal/shared": ["src/shared/src/index.ts"],
+      "@tls-portal/*": ["src/*/src"]
     }
   },
   "include": ["src/**/*"],

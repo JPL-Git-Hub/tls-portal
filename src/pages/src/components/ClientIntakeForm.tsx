@@ -24,14 +24,14 @@ export default function ClientIntakeForm() {
     setValue,
     watch,
     reset
-  } = useForm<CreateClientDto>({
+  } = useForm({
     resolver: zodResolver(createClientSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
       email: '',
       mobile: '',
-      source: 'web_form'
+      source: 'web_form' as const
     }
   });
 
@@ -49,7 +49,7 @@ export default function ClientIntakeForm() {
     }
   });
 
-  const onSubmit: SubmitHandler<CreateClientDto> = (data) => {
+  const onSubmit = (data: CreateClientDto) => {
     createClient.mutate(data);
   };
 

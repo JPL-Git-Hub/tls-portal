@@ -16,6 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      '@tls-portal/shared': resolve(__dirname, '../shared/src/index.ts')
     }
   }
 });

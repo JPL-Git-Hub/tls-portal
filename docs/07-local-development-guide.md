@@ -371,3 +371,88 @@ function generateTestClients(count) {
 - [ ] CORS configured correctly?
 - [ ] SSL certificates valid (if using)?
 - [ ] Browser cache cleared?
+
+## Server Configuration Patterns
+
+### What We Learned
+- Compression middleware disabled due to TypeScript compatibility
+- Trust proxy required for Cloud Run deployment
+- Environment-based static file serving pattern
+
+### Why This Works
+- Progressive enhancement approach (compression can be re-enabled later)
+- Cloud Run compatibility from day one
+- Clear production vs development behavior
+
+### Implementation Pattern
+```typescript
+// Trust proxy - required for Cloud Run
+app.set('trust proxy', true);
+
+// Compression - commented out due to TypeScript issue
+// app.use(compression());
+
+// Serve static files in production only
+if (process.env.NODE_ENV === 'production') {
+  const publicPath = path.join(__dirname, '../../../public');
+  app.use(express.static(publicPath));
+  
+  // Catch all route - serve React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+  });
+}
+```
+
+### Gotchas
+- TypeScript issue with compression types prevents middleware use
+- Static file serving only active in production mode
+- Trust proxy setting critical for proper IP handling in Cloud Run
+
+## Firebase Configuration Patterns
+
+### What We Learned
+- Environment-based initialization (production vs development)
+- Automatic emulator detection via environment variables
+- Single initialization guard pattern
+
+### Why This Works
+- Cloud Run uses automatic service account credentials
+- Local development seamlessly connects to emulators
+- Prevents double initialization errors
+
+### Implementation Pattern
+```typescript
+let initialized = false;
+
+export function initializeFirebase() {
+  if (initialized) return;
+
+  try {
+    if (process.env.NODE_ENV === 'production') {
+      // Cloud Run automatically uses the service account credentials
+      initializeApp();
+    } else {
+      // In development, use project ID and connect to emulators
+      const projectId = process.env.FIREBASE_PROJECT_ID || 'tls-portal-dev';
+      
+      initializeApp({ projectId });
+      
+      // Connect to emulators if available
+      if (process.env.FIRESTORE_EMULATOR_HOST) {
+        console.log('Using Firestore emulator:', process.env.FIRESTORE_EMULATOR_HOST);
+      }
+    }
+    
+    initialized = true;
+  } catch (error) {
+    console.error('Failed to initialize Firebase:', error);
+    throw error;
+  }
+}
+```
+
+### When to Use
+- Always check FIRESTORE_EMULATOR_HOST for local development
+- Use default credentials in production environments
+- Initialize once at server startup, not per request

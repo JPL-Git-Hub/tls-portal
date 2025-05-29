@@ -9,12 +9,12 @@ This guide describes the TLS Portal system, a modular monolith with automatic cl
 ### Modular Monolith Design
 
 The project follows a modular monolith architecture with clean separation of concerns:
-- **auth**: Authentication functionality
-- **creator**: Portal creation and client management
-- **forms**: Form interfaces for intake
-- **pages**: React frontend portal interface
-- **router**: Subdomain routing logic
-- **shared**: Shared utilities, types, and configuration
+- **creator**: Portal creation and client management (implemented)
+- **pages**: React frontend portal interface (implemented)
+- **shared**: Shared utilities, types, and configuration (implemented)
+- **auth**: Authentication functionality (planned - not yet implemented)
+- **forms**: Form interfaces for intake (planned - not yet implemented)
+- **router**: Subdomain routing logic (planned - not yet implemented)
 
 All modules communicate via direct imports within the monolith, maintaining clean boundaries without deployment separation.
 
@@ -169,7 +169,7 @@ Deploy using standard Google Cloud commands after building and pushing the conta
 ### Performance Optimization
 
 - Vite code splitting for optimal bundle sizes
-- Compression middleware for response optimization
+- Compression middleware for response optimization (currently disabled due to TypeScript compatibility issue)
 - Firestore query indexing for faster data access
 - React Query caching for reduced API calls
 
@@ -184,7 +184,7 @@ Deploy using standard Google Cloud commands after building and pushing the conta
 ## Next Development Phases
 
 1. **Authentication System** - Complete Firebase Auth integration
-2. **Subdomain Routing** - Express-subdomain implementation
+2. **Subdomain Routing** - Router module implementation
 3. **Client Dashboard** - Portal interface development
 4. **Document Management** - File upload and storage
 5. **Notification System** - Email and in-app notifications

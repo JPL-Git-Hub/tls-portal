@@ -421,4 +421,42 @@ yarn dev:frontend &
 wait
 ```
 
+## Deployment Evolution Patterns
+
+### What We Learned
+- Single production environment (YAGNI - removed staging)
+- Direct Cloud Run deployment with confirmation prompts
+- Hardcoded gcloud path handling for local SDK installations
+
+### Why This Works
+- Eliminates staging complexity that wasn't needed
+- User confirmation prevents accidental production deploys
+- Flexible gcloud detection handles different install methods
+
+### Implementation Pattern
+```bash
+# Find gcloud command with fallback to common locations
+GCLOUD_CMD=""
+if command -v gcloud >/dev/null 2>&1; then
+    GCLOUD_CMD="gcloud"
+elif [ -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
+    GCLOUD_CMD="/Users/josephleon/google-cloud-sdk/bin/gcloud"
+else
+    die "Google Cloud SDK not found. Install from https://cloud.google.com/sdk"
+fi
+
+# Production deployment confirmation
+echo -e "${YELLOW}⚠️  Production Deployment Warning${NC}"
+echo "You are about to deploy to PRODUCTION."
+read -p "Are you sure? (type 'yes' to confirm): " confirm
+if [ "$confirm" != "yes" ]; then
+    die "Production deployment cancelled"
+fi
+```
+
+### Gotchas
+- Requires manual "yes" confirmation for production safety
+- Hard-coded service account email format assumption
+- gcloud SDK installation path varies by platform
+
 This guide emphasizes simplicity and pragmatism, avoiding complex tooling in favor of straightforward bash scripting that's easy to understand and maintain.
