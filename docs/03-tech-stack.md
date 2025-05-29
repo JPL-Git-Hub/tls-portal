@@ -27,7 +27,7 @@ Single-container deployment to Google Cloud Run deploying a unified portal syste
 The shared module contains:
 - **types**: Shared TypeScript interface and type definitions including client data models with subdomain field
 - **config**: Environment and feature configuration
-- **utils**: Common utilities including logging, validation schemas with automatic formatting, subdomain generation (4 letters + 4 digits), address formatting, and authentication helpers
+- **utils**: Common utilities including logging, Zod validation schemas with automatic formatting, subdomain generation (4 letters + 4 digits), and authentication helpers
 - **constants**: System-wide constants and settings
 
 ## Core Technologies
