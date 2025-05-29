@@ -97,8 +97,8 @@ fi
 
 ### Never Suggest:
 - Testing frameworks beyond minimal existing setup
-- CI/CD pipelines or GitHub Actions workflows
-- Manifest files or YAML orchestration
+- Complex CI/CD pipelines (simple GitHub Actions are acceptable with Claude GitHub App)
+- Manifest files or complex YAML orchestration
 - Complex directory restructuring
 - Multi-day implementation timelines
 - Enterprise patterns (dependency injection, factories)
@@ -117,9 +117,9 @@ fi
 - "comprehensive testing strategy"
 - "robust error handling"
 - "enterprise-grade"
-- "production-ready CI/CD"
-- "automated deployment pipeline"
-- "monitoring and observability"
+- "complex CI/CD pipeline" (simple Claude GitHub App automation is fine)
+- "over-engineered deployment pipeline"
+- "monitoring and observability framework"
 - "scalable architecture"
 - "microservices approach"
 - "best practices" (when adding complexity)
@@ -143,8 +143,13 @@ When working on this project:
 ### Bad AI Responses:
 - "Implement a comprehensive testing strategy with..."
 - "Create a robust error handling framework..."
-- "Set up a CI/CD pipeline with automated..."
+- "Set up a complex CI/CD pipeline with multiple stages..."
 - "Let's refactor this into a proper abstraction layer..."
+
+### Acceptable Automation:
+- Claude GitHub App for AI-assisted code reviews
+- Simple GitHub Actions for automated testing and deployment
+- Automated workflows that enhance developer productivity without adding complexity
 
 ## Success Metrics
 

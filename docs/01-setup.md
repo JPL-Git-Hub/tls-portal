@@ -58,6 +58,15 @@ cd tls-portal
 3. **Google Cloud SDK** - For deployment
    - Download: https://cloud.google.com/sdk
 
+4. **GitHub CLI** - For GitHub integration
+   ```bash
+   # macOS
+   brew install gh
+   
+   # Others
+   # Visit: https://cli.github.com
+   ```
+
 ## Detailed Setup
 
 ### Step 1: Prerequisites Check
@@ -247,13 +256,47 @@ mkcert -install
 mkcert "*.localhost" localhost
 ```
 
+## Claude GitHub App Setup
+
+The Claude GitHub App provides AI-powered code reviews and development assistance:
+
+### Installation Steps
+
+1. **Install the GitHub App**:
+   ```bash
+   # From the project root
+   cd tls-portal
+   /install-github-app
+   ```
+
+2. **Configure GitHub Repository**:
+   ```bash
+   # Authenticate with GitHub
+   gh auth login
+   
+   # Set up repository (if not already done)
+   git remote add origin https://github.com/YOUR_USERNAME/tls-portal.git
+   ```
+
+3. **Enable Claude Code Reviews**:
+   - The app will automatically review pull requests
+   - Provides security and performance suggestions
+   - Helps maintain code quality standards
+
+### Benefits:
+- **Automated PR Reviews**: Get instant feedback on code changes
+- **Security Analysis**: Identifies potential vulnerabilities
+- **Best Practice Enforcement**: Ensures consistency across the codebase
+- **Learning Support**: Explains complex code patterns
+
 ## Next Steps
 
 1. **Add authentication** - Implement Firebase Auth
-2. **Deploy to Cloud Run** - Set up CI/CD
+2. **Deploy to Cloud Run** - Set up CI/CD with GitHub Actions
 3. **Add more forms** - Extend the form system
 4. **Implement routing** - Install express-subdomain and configure
 5. **Add tests** - Write unit and integration tests
+6. **Configure Claude GitHub App** - Set up automated code reviews
 
 ## Support
 

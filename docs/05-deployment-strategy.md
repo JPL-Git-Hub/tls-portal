@@ -208,7 +208,11 @@ Create `scripts/health-check.sh` for post-deployment validation:
 
 ## CI/CD Pipeline Recommendations
 
-### GitHub Actions Workflow
+### GitHub Actions Workflow with Claude GitHub App
+
+The Claude GitHub App enhances our deployment workflow with AI-assisted code reviews and automated checks.
+
+#### Basic Deployment Workflow
 
 ```yaml
 # .github/workflows/deploy.yml
@@ -234,6 +238,40 @@ jobs:
       - Run health checks
       - Create release notes
 ```
+
+#### Claude GitHub App Integration
+
+```yaml
+# .github/workflows/claude-review.yml
+name: Claude Code Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Claude Code Analysis
+        uses: anthropics/claude-code-action@v1
+        with:
+          review-type: 'security,performance,best-practices'
+          auto-suggest: true
+          
+      - name: Post Review Comments
+        if: always()
+        uses: anthropics/claude-comment-action@v1
+```
+
+#### Benefits of Claude GitHub App:
+- **Automated Code Reviews**: AI-powered analysis of pull requests
+- **Security Scanning**: Identifies potential security issues before merge
+- **Performance Suggestions**: Recommends optimizations
+- **Best Practice Enforcement**: Ensures code follows project conventions
+- **Learning Assistant**: Helps developers understand complex changes
 
 ## Common Pitfalls to Avoid
 

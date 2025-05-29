@@ -127,4 +127,31 @@ The `validate-env.sh` script provides:
 - No manual secret management required
 - Automated deployment through CI/CD pipelines
 
+## GitHub App Environment Variables
+
+When using the Claude GitHub App, the following environment variables may be configured:
+
+### Optional GitHub App Configuration
+
+```bash
+# .github/workflows/claude-review.yml environment
+CLAUDE_REVIEW_LEVEL=standard        # Options: minimal, standard, comprehensive
+CLAUDE_AUTO_SUGGEST=true            # Enable automatic code suggestions
+CLAUDE_SECURITY_SCAN=true           # Enable security vulnerability scanning
+CLAUDE_PERFORMANCE_CHECK=true       # Enable performance analysis
+```
+
+### GitHub Actions Secrets
+
+Configure these in your GitHub repository settings:
+
+```bash
+# Repository Settings > Secrets and variables > Actions
+GOOGLE_CLOUD_PROJECT_ID            # Your GCP project ID
+GOOGLE_CLOUD_SERVICE_ACCOUNT       # Service account for deployments
+FIREBASE_PROJECT_ID                # Firebase project identifier
+```
+
+The Claude GitHub App handles its own authentication and doesn't require additional API keys.
+
 This strategy ensures secure, scalable management of environment variables and secrets across all deployment environments while maintaining developer productivity.

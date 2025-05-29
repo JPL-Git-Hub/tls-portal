@@ -86,6 +86,10 @@ The shared module contains:
   - Building optimized Docker images
   - Deploying to Google Cloud Run
 - **Google Cloud Build** for container builds with layer optimization
+- **Claude GitHub App** for AI-assisted development workflows:
+  - Automated code review assistance
+  - Pull request analysis and suggestions
+  - Integration with Claude Code for development tasks
 
 ### Development Tools
 
