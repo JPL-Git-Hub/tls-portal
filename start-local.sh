@@ -26,8 +26,18 @@ for arg in "$@"; do
   esac
 done
 
-# Ensure Java is in PATH
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# Get script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Source Java utilities
+source "$SCRIPT_DIR/scripts/lib/utils.sh"
+source "$SCRIPT_DIR/scripts/lib/java.sh"
+
+# Setup Java environment
+if ! setup_java 11; then
+  echo "❌ Java 11 or higher is required for Firebase emulators"
+  exit 1
+fi
 
 # Validate environment
 echo "🔍 Validating environment..."

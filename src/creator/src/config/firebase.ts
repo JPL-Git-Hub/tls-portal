@@ -19,13 +19,18 @@ export function initializeFirebase() {
       // In development, use project ID and connect to emulators if available
       const projectId = process.env.FIREBASE_PROJECT_ID || 'tls-portal-dev';
       
+      // Initialize with projectId only - this works for emulator mode
       initializeApp({
-        projectId,
+        projectId: projectId,
       });
       
-      // Connect to emulators if available
-      if (process.env.FIRESTORE_EMULATOR_HOST) {
-        console.log('Using Firestore emulator:', process.env.FIRESTORE_EMULATOR_HOST);
+      // Set up emulator connection
+      if (process.env.FIRESTORE_EMULATOR_HOST || process.env.USE_EMULATOR === 'true') {
+        // For development without emulators running, we need to handle this gracefully
+        const emulatorHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost:8080';
+        process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
+        console.log('Configured for Firestore emulator:', emulatorHost);
+        console.log('Note: Ensure Firebase emulators are running or remove USE_EMULATOR from .env');
       }
     }
     

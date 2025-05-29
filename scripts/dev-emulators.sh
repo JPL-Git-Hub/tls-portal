@@ -11,20 +11,18 @@ project_root="$(cd "$script_dir/.." && pwd)"
 # Source libraries
 source "$script_dir/lib/utils.sh"
 source "$script_dir/lib/config.sh"
+source "$script_dir/lib/java.sh"
 
 # Ensure we're in project root
 cd "$project_root"
-
-# Ensure Java is in PATH
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # Check prerequisites
 check_prerequisites() {
     section "Checking Prerequisites"
     
-    # Check Java
-    if ! command -v java >/dev/null 2>&1; then
-        die "Java is required for Firebase emulators. Install with: brew install openjdk"
+    # Setup Java environment
+    if ! setup_java 11; then
+        die "Java 11 or higher is required for Firebase emulators"
     fi
     
     # Check Firebase CLI

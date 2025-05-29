@@ -11,6 +11,7 @@ project_root="$(cd "$script_dir/.." && pwd)"
 # Source utilities
 source "$script_dir/lib/colors.sh"
 source "$script_dir/lib/utils.sh"
+source "$script_dir/lib/java.sh"
 
 # Check prerequisites
 check_prerequisites() {
@@ -50,11 +51,16 @@ check_prerequisites() {
         log_error "Install Git from https://git-scm.com"
     fi
     
-    # Optional checks
-    if command -v java >/dev/null 2>&1; then
-        log_success "Java: $(java -version 2>&1 | head -1)"
+    # Java check with better detection
+    section "Checking Java"
+    if setup_java 11; then
+        log_success "Java is properly configured"
     else
-        log_warn "Java not found (optional, needed for Firebase emulators)"
+        log_warn "Java 11+ not found (needed for Firebase emulators)"
+        log_info "Java can be installed via:"
+        log_info "  - Homebrew: brew install openjdk"
+        log_info "  - SDKMAN: sdk install java"
+        log_info "  - Download: https://adoptium.net/"
     fi
     
     if command -v firebase >/dev/null 2>&1; then

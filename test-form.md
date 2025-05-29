@@ -13,7 +13,7 @@ Firebase emulators are now running:
 In a new terminal, run:
 
 ```bash
-cd /Users/josephleon/repos/tls-portal
+cd path/to/tls-portal
 yarn dev
 ```
 

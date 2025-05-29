@@ -7,6 +7,7 @@
     "src/*"
   ],
   "scripts": {
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Please use Yarn instead of npm')\"",
     "install:quiet": "./scripts/yarn-quiet.sh install",
     "add:quiet": "./scripts/yarn-quiet.sh add",
     "dev": "concurrently \"yarn workspace @tls-portal/creator dev\" \"yarn workspace @tls-portal/pages dev\"",

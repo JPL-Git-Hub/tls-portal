@@ -394,7 +394,7 @@ From `init-project.sh`:
 ```bash
 # Configuration at top
 PROJECT_NAME="tls-portal"
-PROJECT_DIR="/Users/josephleon/repos/$PROJECT_NAME"
+PROJECT_DIR="$HOME/repos/$PROJECT_NAME"  # Or use dynamic detection
 
 # Clear section headers
 echo -e "${GREEN}=== TLS Portal Project Initialization ===${NC}"
@@ -439,8 +439,8 @@ wait
 GCLOUD_CMD=""
 if command -v gcloud >/dev/null 2>&1; then
     GCLOUD_CMD="gcloud"
-elif [ -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
-    GCLOUD_CMD="/Users/josephleon/google-cloud-sdk/bin/gcloud"
+elif [ -x "$HOME/google-cloud-sdk/bin/gcloud" ]; then
+    GCLOUD_CMD="$HOME/google-cloud-sdk/bin/gcloud"
 else
     die "Google Cloud SDK not found. Install from https://cloud.google.com/sdk"
 fi

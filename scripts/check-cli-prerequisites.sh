@@ -15,6 +15,9 @@ NC='\033[0m' # No Color
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
+# Source utilities for dynamic path detection
+source "$SCRIPT_DIR/lib/gcloud.sh"
+
 echo -e "${GREEN}=== Checking CLI Prerequisites ===${NC}"
 echo "Verifying tools for AI-assisted development..."
 echo
@@ -53,14 +56,16 @@ check_command() {
 check_gcloud() {
     echo -e "\n${YELLOW}Deployment Tools:${NC}"
     
-    # Try standard location first
-    if command -v gcloud >/dev/null 2>&1; then
+    # Use the gcloud detection utility
+    if setup_gcloud >/dev/null 2>&1; then
         echo -e "${GREEN}✓ gcloud${NC} - Google Cloud SDK"
         echo "  Version: $(gcloud --version | head -1)"
-    # Check common macOS location
-    elif [ -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
-        echo -e "${GREEN}✓ gcloud${NC} - Google Cloud SDK (found at ~/google-cloud-sdk/bin/)"
-        echo "  Version: $(/Users/josephleon/google-cloud-sdk/bin/gcloud --version | head -1)"
+        # Check if authenticated
+        if check_gcloud_auth; then
+            echo "  Status: Authenticated"
+        else
+            echo "  Status: Not authenticated (run 'gcloud auth login')"
+        fi
     else
         echo -e "${YELLOW}⚠ gcloud${NC} - Google Cloud SDK ${YELLOW}[OPTIONAL - needed for deployment]${NC}"
         ((warning_count++))
@@ -134,7 +139,7 @@ if [ $missing_count -gt 0 ] || [ $warning_count -gt 0 ]; then
     fi
     
     # Check if we need gcloud
-    if ! command -v gcloud >/dev/null 2>&1 && [ ! -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
+    if ! check_gcloud; then
         echo -e "  ${YELLOW}gcloud:${NC} https://cloud.google.com/sdk/docs/install"
     fi
 fi

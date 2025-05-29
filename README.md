@@ -2,6 +2,14 @@
 
 A modular monolith client portal system with automatic subdomain generation for law firms.
 
+## ⚠️ Important: This project uses Yarn
+
+**This is a Yarn workspace monorepo. Please use Yarn exclusively for all package management:**
+- ✅ Use: `yarn install`, `yarn add`, `yarn remove`
+- ❌ Don't use: `npm install`, `npm add`, `npm remove`
+
+The project has safeguards to prevent accidental npm usage.
+
 ## 🚀 Quick Start
 
 ```bash

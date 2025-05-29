@@ -1,5 +1,15 @@
 # TLS Portal Setup Guide
 
+## ⚠️ Important: Use Yarn Only
+
+This is a Yarn workspace monorepo. **Always use Yarn for package management:**
+- ✅ `yarn install` - Install dependencies
+- ✅ `yarn add <package>` - Add a package
+- ✅ `yarn workspace @tls-portal/creator add <package>` - Add to specific workspace
+- ❌ Never use `npm install` or `npm add`
+
+The project includes safeguards to prevent accidental npm usage.
+
 ## Quick Start
 
 ```bash

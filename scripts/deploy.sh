@@ -11,21 +11,20 @@ project_root="$(cd "$script_dir/.." && pwd)"
 # Source libraries
 source "$script_dir/lib/utils.sh"
 source "$script_dir/lib/config.sh"
+source "$script_dir/lib/gcloud.sh"
 
 # Configuration
 PROD_PROJECT="tls-portal-prod"
 REGION="us-central1"
 SERVICE_NAME="tls-portal"
 
-# Find gcloud command
-GCLOUD_CMD=""
-if command -v gcloud >/dev/null 2>&1; then
-    GCLOUD_CMD="gcloud"
-elif [ -x "/Users/josephleon/google-cloud-sdk/bin/gcloud" ]; then
-    GCLOUD_CMD="/Users/josephleon/google-cloud-sdk/bin/gcloud"
-else
-    die "Google Cloud SDK not found. Install from https://cloud.google.com/sdk"
+# Setup gcloud
+if ! setup_gcloud; then
+    die "Google Cloud SDK not found or not properly configured"
 fi
+
+# Use gcloud directly since it's now in PATH
+GCLOUD_CMD="gcloud"
 
 # Usage function
 usage() {

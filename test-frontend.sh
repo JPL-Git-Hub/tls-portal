@@ -4,7 +4,9 @@ set -e
 echo "🚀 Testing Frontend Only"
 echo "======================="
 
-cd /Users/josephleon/repos/tls-portal
+# Get script directory and project root
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$script_dir"
 
 # Check if node_modules exists in pages
 if [ ! -d "src/pages/node_modules" ]; then
