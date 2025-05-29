@@ -22,6 +22,10 @@ This project follows an **intentionally lightweight and clean architecture that 
 - Follows existing project patterns
 - Can be done in 30 minutes to 4 hours
 
+**Exception for Init Scripts:** Initialization scripts that create complete, working modules may exceed 100 lines when breaking them apart would create unnecessary orchestration complexity. The goal is working functionality, not arbitrary line limits. A 200-line script that gives you a complete working backend is simpler than three 70-line scripts that must be run in sequence.
+
+**The real test:** Ask "Does this make the project simpler?" If one longer script eliminates complexity and gets you to working code faster, choose the longer script.
+
 ### 🛑 Red Flag - Stop If:
 - Needs extensive documentation to understand
 - Requires learning new tools or frameworks
