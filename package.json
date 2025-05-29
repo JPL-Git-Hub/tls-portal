@@ -7,6 +7,8 @@
     "src/*"
   ],
   "scripts": {
+    "install:quiet": "./scripts/yarn-quiet.sh install",
+    "add:quiet": "./scripts/yarn-quiet.sh add",
     "dev": "concurrently \"yarn workspace @tls-portal/creator dev\" \"yarn workspace @tls-portal/pages dev\"",
     "dev:all": "concurrently \"yarn workspace @tls-portal/auth dev\" \"yarn workspace @tls-portal/creator dev\" \"yarn workspace @tls-portal/pages dev\"",
     "dev:backend": "yarn workspace @tls-portal/creator dev",

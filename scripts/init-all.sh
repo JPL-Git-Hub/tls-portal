@@ -105,7 +105,7 @@ install_dependencies() {
     else
         log_info "Installing project dependencies..."
         cd "$project_root"
-        yarn install
+        "$script_dir/yarn-quiet.sh" install
         log_success "Dependencies installed"
     fi
 }
