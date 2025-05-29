@@ -2,8 +2,8 @@
 # Common utility functions for all scripts
 
 # Source colors if not already loaded
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-[ -z "$GREEN" ] && source "$script_dir/colors.sh"
+lib_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+[ -z "$GREEN" ] && source "$lib_dir/colors.sh"
 
 # Logging functions
 log_info() {

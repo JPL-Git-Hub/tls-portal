@@ -1,0 +1,70 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user belongs to the tenant
+    function belongsToTenant(tenantId) {
+      return isSignedIn() && 
+        request.auth.token.tenantId == tenantId;
+    }
+    
+    // Helper function to check if user is a tenant admin
+    function isTenantAdmin(tenantId) {
+      return belongsToTenant(tenantId) && 
+        request.auth.token.role == 'admin';
+    }
+    
+    // Tenant documents
+    match /tenants/{tenantId} {
+      allow read: if belongsToTenant(tenantId);
+      allow write: if isTenantAdmin(tenantId);
+      
+      // Client subcollection
+      match /clients/{clientId} {
+        allow read: if belongsToTenant(tenantId);
+        allow create: if isTenantAdmin(tenantId) && 
+          request.resource.data.tenantId == tenantId;
+        allow update: if isTenantAdmin(tenantId) && 
+          request.resource.data.tenantId == resource.data.tenantId;
+        allow delete: if isTenantAdmin(tenantId);
+      }
+      
+      // Settings subcollection
+      match /settings/{document=**} {
+        allow read: if belongsToTenant(tenantId);
+        allow write: if isTenantAdmin(tenantId);
+      }
+    }
+    
+    // User profiles
+    match /users/{userId} {
+      allow read: if isSignedIn() && 
+        (request.auth.uid == userId || 
+         isTenantAdmin(resource.data.tenantId));
+      allow create: if isSignedIn() && 
+        request.auth.uid == userId &&
+        request.resource.data.userId == userId;
+      allow update: if isSignedIn() && 
+        request.auth.uid == userId &&
+        request.resource.data.userId == resource.data.userId &&
+        request.resource.data.tenantId == resource.data.tenantId;
+      allow delete: if false; // Users cannot be deleted through client
+    }
+    
+    // Public intake forms (write-only for anonymous users)
+    match /intake/{document} {
+      allow create: if true; // Anyone can submit a form
+      allow read: if isSignedIn(); // Only authenticated users can read
+      allow update, delete: if false; // Intake forms are immutable
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

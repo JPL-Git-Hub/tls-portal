@@ -1,0 +1,42 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function belongsToTenant(tenantId) {
+      return isSignedIn() && request.auth.token.tenantId == tenantId;
+    }
+    
+    function isTenantAdmin(tenantId) {
+      return belongsToTenant(tenantId) && request.auth.token.role == 'admin';
+    }
+    
+    // Tenant document storage
+    match /tenants/{tenantId}/{allPaths=**} {
+      allow read: if belongsToTenant(tenantId);
+      allow write: if isTenantAdmin(tenantId);
+    }
+    
+    // Client document storage
+    match /clients/{tenantId}/{clientId}/{allPaths=**} {
+      allow read: if belongsToTenant(tenantId);
+      allow write: if isTenantAdmin(tenantId);
+    }
+    
+    // User profile pictures
+    match /users/{userId}/profile/{fileName} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn() && request.auth.uid == userId && 
+        request.resource.size < 5 * 1024 * 1024 && // 5MB limit
+        request.resource.contentType.matches('image/.*');
+    }
+    
+    // Deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
