@@ -10,7 +10,7 @@ const testClientCreation = () => {
     firstName: 'John',
     lastName: 'Doe',
     email: 'john.doe@example.com',
-    phone: '(555) 123-4567'
+    mobile: '2125551234'  // Valid US phone number format
   });
 
   const options = {

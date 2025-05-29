@@ -61,7 +61,6 @@ See [docs/02-development-guide.md](docs/02-development-guide.md) for development
 - [06. Subdomain Generation](docs/06-subdomain-generation-guide.md) - Subdomain logic and patterns
 - [07. Local Development](docs/07-local-development-guide.md) - Local development patterns
 - [08. Script Development](docs/08-script-development-guide.md) - Bash script best practices
-- [09. Tech Stack Compliance](docs/09-tech-stack-compliance.md) - Technology standards and constraints
 
 ## 🏛️ Project Structure
 

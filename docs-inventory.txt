@@ -7,12 +7,7 @@
 ./docs/06-subdomain-generation-guide.md
 ./docs/07-local-development-guide.md
 ./docs/08-script-development-guide.md
-./final-refactor/0.content-rationalization.md
-./final-refactor/0.refactor-plan.md
-./final-refactor/1.classification-methodology.md
-./final-refactor/2.classification-table-template.md
-./final-refactor/4.refactor-instructions.md
-./final-refactor/5.execution-checklist.md
 ./README.md
 ./READY.md
 ./test-form.md
+./test-workflow.md
