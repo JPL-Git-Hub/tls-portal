@@ -28,7 +28,7 @@ if [[ "$SKIP_EMULATORS" != "true" ]]; then
         log_info "Firebase emulators already running"
     else
         log_info "Starting Firebase emulators..."
-        nohup firebase emulators:start --only auth,firestore,storage --project tls-portal-dev > firebase.log 2>&1 &
+        nohup firebase emulators:start --only auth,firestore,storage > firebase.log 2>&1 &
         sleep 3  # Give it time to start
     fi
 fi

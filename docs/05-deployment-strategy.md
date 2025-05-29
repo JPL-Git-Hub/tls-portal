@@ -62,7 +62,7 @@ This document defines the deployment strategy for the TLS Portal system, clarify
 
 ```bash
 # Local Development (.env)
-FIREBASE_PROJECT_ID=tls-portal-dev
+FIREBASE_PROJECT_ID=the-law-shop-457607
 USE_EMULATOR=true
 FIRESTORE_EMULATOR_HOST=localhost:8080
 AUTH_EMULATOR_HOST=localhost:9099

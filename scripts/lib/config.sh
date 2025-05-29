@@ -3,7 +3,7 @@
 
 # Project configuration
 PROJECT_NAME="tls-portal"
-DEFAULT_FIREBASE_PROJECT="tls-portal-dev"
+DEFAULT_FIREBASE_PROJECT="the-law-shop-457607"
 DEFAULT_REGION="us-central1"
 
 # Module names

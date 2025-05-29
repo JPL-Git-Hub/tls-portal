@@ -14,7 +14,7 @@ export function initializeFirebase() {
     // IMPORTANT: Always use emulators in development to prevent accidental Google Cloud connections
     if (process.env.NODE_ENV !== 'production') {
       // Force emulator usage in development
-      const projectId = process.env.FIREBASE_PROJECT_ID || 'tls-portal-dev';
+      const projectId = process.env.FIREBASE_PROJECT_ID || 'the-law-shop-457607';
       const emulatorHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost:8080';
       
       // Set emulator host BEFORE initializing to ensure it's used

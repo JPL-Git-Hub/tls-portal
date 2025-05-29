@@ -46,7 +46,7 @@ if [ ! -f .env ]; then
   cat > .env << EOF
 NODE_ENV=development
 PORT=3001
-FIREBASE_PROJECT_ID=tls-portal-dev
+FIREBASE_PROJECT_ID=the-law-shop-457607
 ALLOWED_ORIGINS=http://localhost:3000
 DOMAIN=localhost
 
@@ -76,7 +76,7 @@ sleep 2
 
 # Step 2: Start Firebase emulators
 echo "🔥 Starting Firebase emulators..."
-firebase emulators:start --only auth,firestore,storage --project tls-portal-dev > firebase-emulators.log 2>&1 &
+firebase emulators:start --only auth,firestore,storage > firebase-emulators.log 2>&1 &
 EMULATOR_PID=$!
 
 # Wait for emulators to be ready

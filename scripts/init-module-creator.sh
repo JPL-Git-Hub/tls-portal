@@ -198,7 +198,7 @@ export function initializeFirebase() {
       initializeApp();
     } else {
       // In development, use service account or emulators
-      const projectId = process.env.FIREBASE_PROJECT_ID || 'tls-portal-dev';
+      const projectId = process.env.FIREBASE_PROJECT_ID || 'the-law-shop-457607';
       
       initializeApp({
         projectId,

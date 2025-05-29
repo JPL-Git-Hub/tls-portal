@@ -40,7 +40,7 @@ This script:
 ### Option 2: Manual steps
 ```bash
 # Terminal 1 - Firebase Emulators
-firebase emulators:start --only auth,firestore,storage --project tls-portal-dev
+firebase emulators:start --only auth,firestore,storage --project the-law-shop-457607
 
 # Terminal 2 - Development Servers  
 yarn dev
