@@ -15,6 +15,22 @@ import { clientRoutes } from './routes/clients';
 // Load environment variables
 dotenv.config();
 
+// Safety check: Ensure we're not accidentally in production mode locally
+if (process.env.NODE_ENV === 'production' && !process.env.GOOGLE_CLOUD_PROJECT) {
+  console.error('ERROR: NODE_ENV is set to production but no Google Cloud Project detected.');
+  console.error('This appears to be a local development environment.');
+  console.error('Setting NODE_ENV to development to prevent Google Cloud connections.');
+  process.env.NODE_ENV = 'development';
+}
+
+// Log environment for debugging
+console.log('Environment:', {
+  NODE_ENV: process.env.NODE_ENV,
+  PORT: process.env.PORT || 3001,
+  USE_EMULATOR: process.env.USE_EMULATOR,
+  FIRESTORE_EMULATOR_HOST: process.env.FIRESTORE_EMULATOR_HOST
+});
+
 // Initialize Firebase
 initializeFirebase();
 

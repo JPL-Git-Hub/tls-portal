@@ -11,31 +11,34 @@ export function initializeFirebase() {
   if (initialized) return;
 
   try {
-    // In production, use default credentials from service account
-    if (process.env.NODE_ENV === 'production') {
-      // Cloud Run automatically uses the service account credentials
-      initializeApp();
-    } else {
-      // In development, use project ID and connect to emulators if available
+    // IMPORTANT: Always use emulators in development to prevent accidental Google Cloud connections
+    if (process.env.NODE_ENV !== 'production') {
+      // Force emulator usage in development
       const projectId = process.env.FIREBASE_PROJECT_ID || 'tls-portal-dev';
+      const emulatorHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost:8080';
       
-      // Initialize with projectId only - this works for emulator mode
+      // Set emulator host BEFORE initializing to ensure it's used
+      process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
+      
+      console.log('Initializing Firebase in DEVELOPMENT mode');
+      console.log('Using Firestore emulator:', emulatorHost);
+      console.log('Project ID:', projectId);
+      
+      // Initialize with minimal config for emulator mode
       initializeApp({
         projectId: projectId,
       });
       
-      // Set up emulator connection
-      if (process.env.FIRESTORE_EMULATOR_HOST || process.env.USE_EMULATOR === 'true') {
-        // For development without emulators running, we need to handle this gracefully
-        const emulatorHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost:8080';
-        process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
-        console.log('Configured for Firestore emulator:', emulatorHost);
-        console.log('Note: Ensure Firebase emulators are running or remove USE_EMULATOR from .env');
-      }
+      console.log('Note: Ensure Firebase emulators are running with: firebase emulators:start');
+    } else {
+      // Production mode - only use in actual deployed environments
+      console.log('Initializing Firebase in PRODUCTION mode');
+      // Cloud Run automatically uses the service account credentials
+      initializeApp();
     }
     
     initialized = true;
-    console.log('Firebase Admin SDK initialized');
+    console.log('Firebase Admin SDK initialized successfully');
   } catch (error) {
     console.error('Failed to initialize Firebase:', error);
     throw error;
