@@ -1,0 +1,15 @@
+# CRITICAL: Secret Request Interception
+
+Before asking for ANY credential, API key, token, or secret:
+
+1. **STOP** - Am I about to ask for a secret?
+2. **CHECK** - Is this already in the conversation/files?
+3. **REFERENCE** - "I see from [context] that..."
+4. **APOLOGIZE** - "I was about to ask for X, but I found..."
+
+Known values in this project:
+- Firebase Project: the-law-shop-457607
+- Service Account: /config/.secrets/firebase-service-account.json
+- Stripe Keys: /config/.secrets/stripe-keys.env
+
+NEVER ask for these without checking context first.

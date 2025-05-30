@@ -12,9 +12,12 @@ import { initializeFirebase } from './config/firebase';
 import { initializeEmailService } from './services/emailService';
 import { errorHandler } from './middleware/errorHandler';
 import { clientRoutes } from './routes/clients';
+// Payments now handled by Stripe Firestore extension
 
 // Load environment variables
 dotenv.config();
+
+// Stripe keys now handled by Firestore extension
 
 // Safety check: Ensure we're not accidentally in production mode locally
 if (process.env.NODE_ENV === 'production' && !process.env.GOOGLE_CLOUD_PROJECT) {
@@ -36,7 +39,16 @@ console.log('Environment:', {
 initializeFirebase();
 
 // Initialize Email service
-initializeEmailService();
+try {
+  initializeEmailService();
+  console.log('Email service initialized successfully');
+} catch (error) {
+  console.error('Failed to initialize email service:', error);
+  // In production, we want to fail fast if email service is not available
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  }
+}
 
 // Create Express app
 const app = express();
@@ -60,6 +72,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Raw body for Stripe webhooks
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ 
@@ -71,6 +86,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/clients', clientRoutes);
+// Payments handled by Stripe Firestore extension
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

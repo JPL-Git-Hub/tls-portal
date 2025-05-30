@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { BillingService } from '../services/billingService';
 import { ClosingService } from '../services/closingService';
-import LoadingSpinner from './LoadingSpinner';
+import { LoadingSpinner } from './LoadingSpinner';
 import { formatCurrency, getInvoiceStatusColor, getPaymentStatusColor } from '../types/billing';
 import { getClosingStatusColor } from '../types/closing';
 import type { Invoice, PaymentHistory } from '../types/billing';
 import type { Closing } from '../types/closing';
+import { PaymentModal } from './PaymentModal';
 
 export default function BillingPage() {
   const { currentUser, clientData } = useAuth();
@@ -17,6 +18,8 @@ export default function BillingPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [generatingInvoice, setGeneratingInvoice] = useState<string | null>(null);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   useEffect(() => {
     if (currentUser && clientData) {
@@ -77,6 +80,18 @@ export default function BillingPage() {
     const upcomingClosings = closings.filter(c => c.status === 'scheduled').length;
 
     return { totalDue, totalPaid, openInvoices, upcomingClosings };
+  };
+
+  const handlePayInvoice = (invoice: Invoice) => {
+    setSelectedInvoice(invoice);
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentSuccess = async () => {
+    // Refresh invoices after successful payment
+    await loadBillingData();
+    setShowPaymentModal(false);
+    setSelectedInvoice(null);
   };
 
   if (loading) {
@@ -383,7 +398,10 @@ export default function BillingPage() {
                             </a>
                           )}
                           {invoice.status === 'open' && (
-                            <button className="text-green-600 hover:text-green-900">
+                            <button 
+                              onClick={() => handlePayInvoice(invoice)}
+                              className="text-green-600 hover:text-green-900"
+                            >
                               Pay Now
                             </button>
                           )}
@@ -421,6 +439,19 @@ export default function BillingPage() {
           )}
         </div>
       </div>
+
+      {/* Payment Modal */}
+      {selectedInvoice && (
+        <PaymentModal
+          invoice={selectedInvoice}
+          isOpen={showPaymentModal}
+          onClose={() => {
+            setShowPaymentModal(false);
+            setSelectedInvoice(null);
+          }}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 }

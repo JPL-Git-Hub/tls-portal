@@ -1,0 +1,47 @@
+name: AI Context Sync
+
+on:
+  push:
+    paths:
+      - 'src/**/*.ts'
+      - 'src/**/*.tsx'
+      - 'config/quieted-errors.md'
+      - '.eslintrc.json'
+  schedule:
+    - cron: '0 9 * * 1' # Weekly on Mondays at 9 AM
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  generate-context:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Generate AI Context Report
+      run: |
+        chmod +x ./scripts/generate-ai-context.sh
+        ./scripts/generate-ai-context.sh
+    
+    - name: Upload AI Context as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ai-context-report
+        path: .ai-context/current-state.md
+        retention-days: 30
+    
+    # Option 1: Commit back to repo (AI can read it)
+    - name: Commit AI Context
+      run: |
+        git config --local user.email "ai-context-bot@example.com"
+        git config --local user.name "AI Context Bot"
+        git add .ai-context/current-state.md
+        git diff --staged --quiet || git commit -m "Update AI context report [skip ci]"
+        git push || echo "No changes to push"
+    
+    # Option 2: Send to webhook (for MCP server)
+    # - name: Send to MCP Server
+    #   run: |
+    #     curl -X POST ${{ secrets.MCP_WEBHOOK_URL }} \
+    #       -H "Content-Type: application/json" \
+    #       -d @.ai-context/current-state.md

@@ -38,9 +38,9 @@ PORT=3001
 FRONTEND_PORT=3000
 
 # Firebase configuration
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk@your-project-id.iam.gserviceaccount.com
+FIREBASE_PROJECT_ID=the-law-shop-457607
+# Service account should be in: config/.secrets/firebase-service-account.json
+GOOGLE_APPLICATION_CREDENTIALS=./config/.secrets/firebase-service-account.json
 
 # Firebase emulator configuration
 USE_EMULATOR=true
@@ -53,7 +53,7 @@ FRONTEND_URL=http://localhost:3000
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 
 # JWT configuration
-JWT_SECRET=your-secret-key-change-in-production
+JWT_SECRET=randomly-generated-secret-key-minimum-32-chars
 JWT_EXPIRES_IN=7d
 
 # Domain configuration
@@ -97,8 +97,8 @@ API_BASE_URL=http://localhost:3001
 FRONTEND_URL=http://localhost:3000
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
 
-# Development JWT (not secure, for dev only)
-JWT_SECRET=dev-secret-key-do-not-use-in-production
+# Development JWT (generate with: openssl rand -base64 32)
+JWT_SECRET=dev-only-$(openssl rand -base64 32 2>/dev/null || echo "change-me-in-production")
 JWT_EXPIRES_IN=7d
 
 # Domain
@@ -109,6 +109,11 @@ SUBDOMAIN_PATTERN={subdomain}.localhost
 ENABLE_SIGNUP=true
 ENABLE_EMULATORS=true
 LOG_LEVEL=debug
+
+# Stripe Configuration (add real keys to config/.secrets/stripe-keys.env)
+STRIPE_SECRET_KEY=sk_test_YOUR_STRIPE_SECRET_KEY
+STRIPE_PUBLISHABLE_KEY=pk_test_YOUR_STRIPE_PUBLISHABLE_KEY
+STRIPE_WEBHOOK_SECRET=whsec_YOUR_WEBHOOK_SECRET
 EOF
     
     log_success "Created dev.env"

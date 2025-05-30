@@ -1,0 +1,39 @@
+{
+  "name": "tls-portal-context",
+  "description": "Provides TLS Portal quieted errors and TODO context to Claude",
+  "version": "1.0.0",
+  "hooks": {
+    "pre-conversation": {
+      "script": "./scripts/generate-ai-context.sh",
+      "includeOutput": true
+    },
+    "context-refresh": {
+      "interval": "daily",
+      "script": "./scripts/generate-ai-context.sh"
+    }
+  },
+  "context_files": [
+    {
+      "path": ".ai-context/current-state.md",
+      "description": "Current quieted errors and TODOs",
+      "refresh": "on-change"
+    },
+    {
+      "path": "config/quieted-errors.md",
+      "description": "Documented quieted errors",
+      "always_include": true
+    }
+  ],
+  "tools": [
+    {
+      "name": "get_quieted_errors",
+      "description": "Get current quieted errors and TODOs",
+      "command": "./scripts/generate-ai-context.sh && cat .ai-context/current-state.md"
+    },
+    {
+      "name": "check_todos",
+      "description": "Check for TODO/FIXME/HACK comments",
+      "command": "./scripts/check-todos.sh"
+    }
+  ]
+}

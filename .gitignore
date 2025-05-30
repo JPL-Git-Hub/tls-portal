@@ -66,3 +66,4 @@ package-lock.json
 
 # Initialization markers
 .init/
+config/.secrets/

@@ -1,0 +1,5 @@
+{
+  "extensions": {
+    "stripe/firestore-stripe-payments": "0.3.8"
+  }
+}

@@ -4,6 +4,7 @@
 
 import { initializeApp, cert, ServiceAccount } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 
 let initialized = false;
 
@@ -51,3 +52,12 @@ export function getDb() {
   }
   return getFirestore();
 }
+
+export const auth = {
+  verifyIdToken: async (token: string) => {
+    if (!initialized) {
+      throw new Error('Firebase not initialized. Call initializeFirebase() first.');
+    }
+    return getAuth().verifyIdToken(token);
+  }
+};

@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/josephleon/repos/tls-portal"],
+      "description": "Access to project files including quieted-errors.md"
+    },
+    "shell": {
+      "command": "npx", 
+      "args": ["-y", "@modelcontextprotocol/server-shell"],
+      "description": "Run shell commands like check-todos.sh"
+    }
+  },
+  "context": {
+    "autoInclude": [
+      "/config/quieted-errors.md",
+      "/.ai-context/current-state.md"
+    ],
+    "refreshCommands": {
+      "updateContext": "./scripts/generate-ai-context.sh"
+    }
+  }
+}

@@ -9,6 +9,7 @@ project_root="$(cd "$script_dir/.." && pwd)"
 
 source "$script_dir/lib/utils.sh"
 source "$script_dir/lib/config.sh"
+source "$script_dir/lib/secrets-manager.sh"
 
 PROJECT_ID="$DEFAULT_FIREBASE_PROJECT"
 
@@ -24,41 +25,49 @@ usage() {
 push_secrets() {
     section "Pushing Secrets to Google Secrets Manager"
     
-    # Check if .env exists
-    if [ ! -f "$project_root/.env" ]; then
-        die ".env file not found"
+    # List of secrets to push
+    declare -A secrets_to_push=(
+        ["CLOUDFLARE_API_TOKEN"]="config/.secrets/cloudflare.env"
+        ["CLOUDFLARE_ZONE_ID"]="config/.secrets/cloudflare.env"
+        ["STRIPE_SECRET_KEY"]="config/.secrets/stripe-keys.env"
+        ["STRIPE_PUBLISHABLE_KEY"]="config/.secrets/stripe-keys.env"
+        ["STRIPE_WEBHOOK_SECRET"]="config/.secrets/stripe-keys.env"
+        ["GWS_SENDER_EMAIL"]="config/.secrets/gws-email.env"
+        ["SENDGRID_API_KEY"]="config/.secrets/sendgrid.env"
+        ["JWT_SECRET"]="config/.secrets/jwt-secret.env"
+    )
+    
+    # Also check for Firebase service account
+    if [ -f "$project_root/config/.secrets/firebase-service-account.json" ]; then
+        log_info "Uploading Firebase service account..."
+        gcloud secrets create FIREBASE_SERVICE_ACCOUNT \
+            --data-file="$project_root/config/.secrets/firebase-service-account.json" \
+            --project="$PROJECT_ID" 2>/dev/null || \
+        gcloud secrets versions add FIREBASE_SERVICE_ACCOUNT \
+            --data-file="$project_root/config/.secrets/firebase-service-account.json" \
+            --project="$PROJECT_ID"
     fi
     
-    # Read secrets from both .env and secrets template
-    if [ ! -f "$project_root/config/secrets-values.template" ]; then
-        log_warn "config/secrets-values.template not found, using .env only"
-    fi
-    
-    # Get list of secret keys from template
-    while IFS= read -r line; do
-        # Skip comments and empty lines
-        [[ "$line" =~ ^#.*$ ]] || [[ -z "$line" ]] && continue
+    # Push each secret
+    for secret_name in "${!secrets_to_push[@]}"; do
+        local file_path="$project_root/${secrets_to_push[$secret_name]}"
         
-        # Extract key name (before = sign)
-        key=$(echo "$line" | cut -d'=' -f1 | tr -d ' ')
-        
-        # Get value from .env
-        if grep -q "^$key=" "$project_root/.env"; then
-            value=$(grep "^$key=" "$project_root/.env" | cut -d'=' -f2-)
+        if [ -f "$file_path" ]; then
+            # Source the file and check if variable exists
+            source "$file_path"
+            local value="${!secret_name}"
             
-            # Create or update secret
-            log_info "Updating secret: $key"
-            echo -n "$value" | gcloud secrets create "$key" \
-                --data-file=- \
-                --project="$PROJECT_ID" \
-                2>/dev/null || \
-            echo -n "$value" | gcloud secrets versions add "$key" \
-                --data-file=- \
-                --project="$PROJECT_ID"
-        else
-            log_warn "Secret $key not found in .env, skipping"
+            if [ -n "$value" ]; then
+                log_info "Updating secret: $secret_name"
+                echo -n "$value" | gcloud secrets create "$secret_name" \
+                    --data-file=- \
+                    --project="$PROJECT_ID" 2>/dev/null || \
+                echo -n "$value" | gcloud secrets versions add "$secret_name" \
+                    --data-file=- \
+                    --project="$PROJECT_ID"
+            fi
         fi
-    done < "$project_root/config/secrets-values.template"
+    done
     
     log_success "Secrets pushed successfully"
 }

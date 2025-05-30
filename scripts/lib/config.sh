@@ -29,6 +29,9 @@ MARKER_DIR=".init"
 MIN_NODE_VERSION="18.0.0"
 YARN_VERSION="1.x"
 
+# Suppress Node.js deprecation warnings (see config/quieted-errors.md)
+export NODE_OPTIONS="--no-deprecation"
+
 # Port assignments
 FRONTEND_PORT=3000
 BACKEND_PORT=3001

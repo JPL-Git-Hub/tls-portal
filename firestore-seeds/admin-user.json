@@ -1,0 +1,37 @@
+{
+  "users": {
+    "your-firebase-uid-here": {
+      "email": "your-email@thelawshop.com",
+      "displayName": "Your Name",
+      "role": "superadmin",
+      "permissions": [],
+      "tenantId": "the-law-shop",
+      "isActive": true,
+      "createdAt": {"_seconds": 1700000000, "_nanoseconds": 0},
+      "updatedAt": {"_seconds": 1700000000, "_nanoseconds": 0},
+      "metadata": {
+        "isFounder": true,
+        "roles": ["superadmin", "attorney"],
+        "barNumber": "YOUR-BAR-NUMBER",
+        "practiceAreas": ["real-estate", "corporate", "general"]
+      }
+    }
+  },
+  "tenants": {
+    "the-law-shop": {
+      "name": "The Law Shop",
+      "domain": "thelawshop.com",
+      "settings": {
+        "allowSignup": true,
+        "requireApproval": false,
+        "branding": {
+          "primaryColor": "#1e40af",
+          "logo": "/assets/logo.png"
+        }
+      },
+      "superAdmins": ["your-firebase-uid-here"],
+      "attorneys": ["your-firebase-uid-here"],
+      "createdAt": {"_seconds": 1700000000, "_nanoseconds": 0}
+    }
+  }
+}

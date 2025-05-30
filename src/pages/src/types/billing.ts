@@ -16,6 +16,7 @@ export interface Invoice {
   subtotal: number;
   tax: number;
   total: number;
+  amount: number; // Total amount for Stripe
   amountPaid: number;
   amountDue: number;
   currency: string;
