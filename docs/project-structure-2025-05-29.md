@@ -2,13 +2,13 @@
 
 
 tls-portal/
-├── config/       # environmental config files
-│   ├── dev.env   # environmental var for development
-│   ├── env.template  # environmental files templ
-│   ├── prod.env      # environmental var for production 
-│   └── secrets-values.template # secrets config templ
+├── config/
+│   ├── env.template            # Template for all .env files (shows required variables)
+│   ├── dev.env                 # Development values (localhost, test APIs, debug=true)
+│   ├── prod.env                # Production values (real URLs, live APIs, debug=false)
+│   └── secrets-values.template # Template for managing secrets in Google Secrets Manager
 │
-├── docs/         						   # project docs
+├── docs/         						   
 │   ├── 00-agentic_coding_philosophy.md    # ai coding principles
 │   ├── 00-project-overview.md             # project overview
 │   ├── 01-setup.md                        # initial setup
@@ -74,71 +74,71 @@ tls-portal/
 │   ├── creator/                    # backend API services
 │   │   ├── src/
 │   │   │   ├── config/
-│   │   │   │   └── firebase.ts     # FB config
+│   │   │   │   └── firebase.ts     		# FB config
 │   │   │   ├── controllers/
-│   │   │   │   └── clientController.ts  # Client controller logic
+│   │   │   │   └── clientController.ts  	# client biz logic
 │   │   │   ├── middleware/
-│   │   │   │   └── errorHandler.ts        # Error handling middleware
+│   │   │   │   └── errorHandler.ts  		# error handling
 │   │   │   ├── routes/
-│   │   │   │   └── clients.ts             # Client API routes
-│   │   │   ├── services/                  # Business logic services
-│   │   │   ├── utils/                     # Utility functions
-│   │   │   └── server.ts                  # Express server entry point
+│   │   │   │   └── clients.ts     # client API routes
+│   │   │   ├── services/          # general biz logic
+│   │   │   ├── utils/             # util functions
+│   │   │   └── server.ts          # express server entry point
 │   │   │
-│   │   ├── nodemon.json                   # Nodemon configuration
-│   │   ├── package.json                   # Creator module dependencies
-│   │   ├── tsconfig.json                  # TypeScript configuration
-│   │   └── tsconfig.tsbuildinfo           # TypeScript build info
+│   │   ├── nodemon.json           # Nodemon config
+│   │   ├── package.json           # Creator module depend
+│   │   ├── tsconfig.json          # TypeScript config
+│   │   └── tsconfig.tsbuildinfo   # TypeScript build
 │   │
-│   ├── pages/                             # Frontend React application
-│   │   ├── public/                        # Static assets
+│   ├── pages/                     # Frontend React appl
+│   │   ├── public/                # Static assets
 │   │   ├── src/
 │   │   │   ├── components/
 │   │   │   │   └── ClientIntakeForm.tsx   # Client intake form component
 │   │   │   ├── hooks/                     # React custom hooks
-│   │   │   ├── utils/                     # Frontend utilities
-│   │   │   ├── App.tsx                    # Main App component
-│   │   │   ├── index.css                  # Global styles
-│   │   │   └── main.tsx                   # React entry point
+│   │   │   ├── utils/                     # frontend util
+│   │   │   ├── App.tsx                    # main app component
+│   │   │   ├── index.css                  # global styles
+│   │   │   └── main.tsx                   # react entry point
 │   │   │
 │   │   ├── index.html                     # HTML entry point
-│   │   ├── package.json                   # Pages module dependencies
-│   │   ├── postcss.config.js              # PostCSS configuration
-│   │   ├── tailwind.config.js             # Tailwind CSS configuration
+│   │   ├── package.json                   # Pages module depend
+│   │   ├── postcss.config.js              # PostCSS config
+│   │   ├── tailwind.config.js             # Tailwind CSS config
 │   │   ├── test.html                      # Test HTML page
-│   │   ├── tsconfig.json                  # TypeScript configuration
-│   │   └── vite.config.ts                 # Vite build configuration
+│   │   ├── tsconfig.json                  # TypeScript config
+│   │   └── vite.config.ts                 # Vite build config
 │   │
-│   └── shared/                            # Shared code between modules
+│   └── shared/                            # shared code btw mods
 │       ├── src/
-│       │   ├── config/                    # Shared configuration
-│       │   ├── constants/                 # Shared constants
+│       │   ├── config/                    # shared config
+│       │   ├── constants/                 # shared constants
 │       │   ├── types/
-│       │   │   └── client.ts              # Client type definitions
+│       │   │   └── client.ts          	   # client type def'n
 │       │   ├── utils/
-│       │   │   ├── subdomain.ts           # Subdomain utilities
-│       │   │   └── validation.ts          # Validation utilities
-│       │   └── index.ts                   # Shared module exports
+│       │   │   ├── subdomain.ts           # subdomain util
+│       │   │   └── validation.ts          # validation util
+│       │   └── index.ts                   # shared mod export
 │       │
-│       ├── package.json                   # Shared module dependencies
-│       ├── tsconfig.json                  # TypeScript configuration
-│       └── tsconfig.tsbuildinfo           # TypeScript build info
+│       ├── package.json                   # shared mod depend
+│       ├── tsconfig.json                  # TypeScript config
+│       └── tsconfig.tsbuildinfo           # TypeScript build
 │
-├── Dockerfile                             # Docker container configuration
-├── firebase.json                          # Firebase project configuration
-├── firestore.indexes.json                 # Firestore database indexes
-├── firestore.rules                        # Firestore security rules
-├── npm                                    # npm wrapper script
-├── npx                                    # npx wrapper script
-├── package.json                           # Root package.json (workspace)
-├── readme.md                              # Project README
-├── start-local.sh                         # Start local development
-├── storage.rules                          # Firebase storage rules
-├── test-client-creation.js                # Client creation test
-├── test-client-patterns.js                # Client patterns test
-├── test-frontend.sh                       # Frontend test script
-├── tsconfig.json                          # Root TypeScript config
-└── yarn.lock                              # Yarn lock file
+├── Dockerfile                     # Docker container config
+├── firebase.json                  # Firebase project config
+├── firestore.indexes.json         # Firestore database indexes
+├── firestore.rules                # Firestore security rules
+├── npm                            # npm wrapper script
+├── npx                            # npx wrapper script
+├── package.json                   # Root package.json (workspace)
+├── readme.md                      # Project README
+├── start-local.sh                 # Start local development
+├── storage.rules                  # Firebase storage rules
+├── test-client-creation.js        		# Client creation test
+├── test-client-patterns.js             # Client patterns test
+├── test-frontend.sh                    # Frontend test script
+├── tsconfig.json                       # Root TypeScript config
+└── yarn.lock                           # Yarn lock file
 
 ## Project Structure Overview
 
