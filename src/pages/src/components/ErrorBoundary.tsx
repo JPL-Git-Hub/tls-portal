@@ -26,7 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
     
     // In production, you would send this to an error reporting service
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       // Example: Send to Sentry, LogRocket, etc.
       // sendErrorToService(error, errorInfo);
     }
@@ -67,7 +67,7 @@ class ErrorBoundary extends Component<Props, State> {
               <p className="mt-2 text-sm text-gray-600">
                 We're sorry for the inconvenience. Please try refreshing the page.
               </p>
-              {process.env.NODE_ENV === 'development' && this.state.error && (
+              {import.meta.env.DEV && this.state.error && (
                 <details className="mt-4 text-left">
                   <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
                     Error details (development only)

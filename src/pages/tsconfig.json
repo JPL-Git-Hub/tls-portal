@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vite/client"],
     "paths": {
       "@/*": ["./src/*"],
       "@tls-portal/shared": ["../shared/src/index.ts"]

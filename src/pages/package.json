@@ -19,6 +19,7 @@
     "@tls-portal/shared": "1.0.0",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.0",
+    "firebase": "^11.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.0",
