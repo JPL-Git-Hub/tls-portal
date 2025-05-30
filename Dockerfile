@@ -1,4 +1,6 @@
 # Multi-stage Dockerfile for TLS Portal
+# This file is used by GitHub Actions for automated builds
+# You do NOT need Docker installed locally
 
 # Stage 1: Build stage
 FROM node:18-alpine AS builder

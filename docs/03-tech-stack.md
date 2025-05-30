@@ -69,7 +69,7 @@ The shared module contains:
 ### Infrastructure & Deployment
 - **Google Cloud Run** for containerized application deployment
 - **Firebase Hosting** for static assets and frontend delivery
-- **Docker** for containerization with optimized multi-stage builds
+- **GitHub Actions** for automated CI/CD (builds containers remotely)
 - **Cloudflare** for CDN, edge caching, and wildcard DNS management
 - **Yarn workspaces** for monorepo package organization
 
@@ -121,10 +121,9 @@ The shared module contains:
 - **Caching Strategy** relying on Cloudflare edge caching
 - **Catchpoint Webpagetest** for performance testing
 
-### Docker Tools
-- **Docker** - Container management
-- **docker-compose** - Local dev environment setup
-- **dive** - Inspect Docker image layers
+### Container Tools (Optional)
+- **Docker** - Only needed for manual/emergency deployment
+- **GitHub Actions** handles all container builds remotely
 
 ### Form & Data Processing
 - **React Hook Form** with Zod resolver integration

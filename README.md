@@ -16,8 +16,12 @@ Everything is in the `docs/` folder.
 ## Deploy
 
 ```bash
-./scripts/firebase-hosting-deploy.sh     # Frontend to portal.thelawshop.com
-./scripts/google-cloud-deploy.sh prod    # Backend API to *.portal.thelawshop.com
+git push origin main                     # Deploys automatically via GitHub Actions
+```
+
+For manual deployment (emergency only):
+```bash
+./scripts/google-cloud-deploy.sh prod --force
 ```
 
 **Use Yarn only**. Never use npm.

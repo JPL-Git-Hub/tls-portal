@@ -37,11 +37,6 @@ usage() {
 check_prerequisites() {
     section "Checking Prerequisites"
     
-    # Check Docker
-    if ! command -v docker >/dev/null 2>&1; then
-        die "Docker is required but not installed"
-    fi
-    
     # Check gcloud
     if [ -z "$GCLOUD_CMD" ]; then
         die "Google Cloud SDK is required but not installed"
@@ -146,12 +141,23 @@ main() {
     echo -e "${GREEN}       TLS Portal Production Deployment             ${NC}"
     echo -e "${GREEN}═══════════════════════════════════════════════════${NC}"
     echo
+    log_warn "This script is for manual/emergency deployment only"
+    log_info "Recommended: Push to main branch to deploy via GitHub Actions"
+    echo
     
     check_prerequisites
+    
+    # Only proceed if forced or emergency
+    if [ "$2" != "--force" ]; then
+        log_info "Add --force to deploy manually"
+        log_info "Or use: git push origin main"
+        exit 0
+    fi
+    
     build_container
     deploy_production
     
-    log_success "Deployment completed!"
+    log_success "Manual deployment completed!"
 }
 
 # Run main function

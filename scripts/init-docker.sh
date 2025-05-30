@@ -3,6 +3,8 @@ set -e
 
 # Initialize Docker configuration
 # Creates Dockerfile and .dockerignore
+# Note: These files are used by GitHub Actions for remote builds
+# Local Docker installation is NOT required for deployment
 
 # Get script directory and project root
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

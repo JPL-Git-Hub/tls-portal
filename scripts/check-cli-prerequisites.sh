@@ -107,9 +107,9 @@ fi
 # Google Cloud tools
 check_gcloud
 
-# Docker for production builds
-echo -e "\n${YELLOW}Container Tools:${NC}"
-check_command "docker" "Docker for production builds" false
+# Docker (only needed for manual/emergency deployment)
+echo -e "\n${YELLOW}Container Tools (Optional):${NC}"
+check_command "docker" "Docker (only for manual deployment, not needed with GitHub Actions)" false
 
 # Summary
 echo
