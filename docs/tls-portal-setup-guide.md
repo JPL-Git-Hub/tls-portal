@@ -306,4 +306,4 @@ The Claude GitHub App provides AI-powered code reviews and development assistanc
 
 ## Deployment
 
-For deployment to staging or production environments, see [05-deployment-strategy.md](05-deployment-strategy.md).
+For deployment to staging or production environments, see [tls-portal-deployment.md](tls-portal-deployment.md).

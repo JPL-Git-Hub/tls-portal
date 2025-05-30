@@ -155,8 +155,8 @@ Working with environment files:
 ```bash
 setup_env() {
     # Create from template
-    if [ -f ".env.example" ] && [ ! -f ".env" ]; then
-        cp .env.example .env
+    if [ -f "config/env.template" ] && [ ! -f "config/dev.env" ]; then
+        cp config/env.template config/dev.env
         echo -e "${GREEN}✓ Created .env from template${NC}"
     fi
     

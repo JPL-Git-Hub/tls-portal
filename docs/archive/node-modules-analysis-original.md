@@ -1,8 +1,46 @@
 # Node Modules Analysis - TLS Portal
 **Generated:** January 29, 2024
 
-## Overview
+## Executive Summary
+
 Your TLS Portal monorepo contains **525 packages** in node_modules (265MB total). This is typical for a full-stack TypeScript application with React frontend and Express backend.
+
+### What We Use
+
+### Backend (creator)
+- **express** - Web server
+- **firebase-admin** - Database and auth
+- **cors** - Handle cross-origin requests
+- **helmet** - Security headers
+
+### Frontend (pages)
+- **react** - UI framework
+- **vite** - Build tool
+- **tailwind** - CSS utilities
+- **react-hook-form** - Form handling
+- **zustand** - State management
+- **axios** - API calls
+
+### Shared
+- **zod** - Validation schemas
+- **libphonenumber-js** - Phone formatting
+
+### Key Points
+
+1. Everything is managed through Yarn workspaces
+2. Dependencies are minimal and focused
+3. No complex enterprise libraries
+4. Each package only includes what it needs
+
+### Updating Dependencies
+
+```bash
+# Update all packages
+yarn upgrade-interactive
+
+# Add to specific workspace
+yarn workspace @tls-portal/creator add package-name
+```
 
 ## Package Categories
 

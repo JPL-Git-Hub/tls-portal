@@ -72,7 +72,7 @@ The `.gitignore` file ensures security by excluding:
 - Any file containing actual secret values
 
 ### Template Files
-The project includes `.env.example` as a committed reference showing:
+The project includes `env.template` as a committed reference showing:
 - All required environment variables
 - Safe placeholder values
 - Clear documentation for each variable

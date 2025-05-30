@@ -30,7 +30,7 @@ See [03-tech-stack.md](03-tech-stack.md) for detailed technology decisions and a
 
 ## Setup
 
-See [01-setup.md](01-setup.md) for complete installation instructions, prerequisites, and troubleshooting.
+See [tls-portal-setup-guide.md](tls-portal-setup-guide.md) for complete installation instructions, prerequisites, and troubleshooting.
 
 ## Key Features
 
@@ -96,7 +96,7 @@ yarn build         # Production build
 yarn docker:build  # Container image
 ```
 
-See [01-setup.md](01-setup.md#available-scripts) for additional scripts and commands.
+See [tls-portal-setup-guide.md](tls-portal-setup-guide.md#available-scripts) for additional scripts and commands.
 
 ### Package Management
 
@@ -130,7 +130,7 @@ yarn eslint .     # NOT: npx eslint .
 
 ### Environment Variables
 
-See [04-environment-variables.md](04-environment-variables.md) for configuration details.
+See [Configuration Documentation](../config/README-config-variables.md) for configuration details.
 
 ### Yarn Configuration
 
@@ -203,6 +203,6 @@ Deploy using standard Google Cloud commands after building and pushing the conta
 ## References
 
 - [Tech Stack Documentation](03-tech-stack.md)
-- [Setup Instructions](01-setup.md)
-- [Environment Configuration](04-environment-variables.md)
+- [Setup Instructions](tls-portal-setup-guide.md)
+- [Environment Configuration](../config/README-config-variables.md)
 - API Documentation (coming soon)
