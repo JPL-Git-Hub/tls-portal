@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+# Install the Claude GitHub App for this repository
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$script_dir/lib/utils.sh"
+
+APP_URL="https://github.com/apps/claude/installations/new"
+
+section "Claude GitHub App Installation"
+log_info "Opening installation page..."
+
+if command -v open >/dev/null 2>&1; then
+    open "$APP_URL"
+elif command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$APP_URL"
+else
+    log_warn "Could not automatically open your browser."
+    echo "Please visit the following URL to install the app:"
+    echo "$APP_URL"
+fi
+
+log_success "Follow the prompts in your browser to complete the installation."
