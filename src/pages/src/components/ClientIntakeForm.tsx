@@ -4,6 +4,7 @@ import { createClientSchema, type CreateClientDto } from '@tls-portal/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useState } from 'react';
+import { z } from 'zod';
 
 function formatPhoneNumber(value: string): string {
   const phone = value.replace(/\D/g, '');
@@ -21,6 +22,9 @@ export default function ClientIntakeForm() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [portalUrl, setPortalUrl] = useState('');
 
+  // Use the input type from the schema
+  type FormInput = z.input<typeof createClientSchema>;
+
   const {
     register,
     handleSubmit,
@@ -29,7 +33,7 @@ export default function ClientIntakeForm() {
     watch,
     reset,
     trigger
-  } = useForm<CreateClientDto>({
+  } = useForm<FormInput>({
     resolver: zodResolver(createClientSchema),
     mode: 'onTouched',
     defaultValues: {
@@ -37,7 +41,7 @@ export default function ClientIntakeForm() {
       lastName: '',
       email: '',
       mobile: '',
-      source: 'web_form' as const
+      source: 'web_form'
     }
   });
 
@@ -63,8 +67,9 @@ export default function ClientIntakeForm() {
     }
   });
 
-  const onSubmit: SubmitHandler<CreateClientDto> = (data) => {
-    createClient.mutate(data);
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    // The zodResolver will transform the data to CreateClientDto
+    createClient.mutate(data as CreateClientDto);
   };
 
   const handlePhoneChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

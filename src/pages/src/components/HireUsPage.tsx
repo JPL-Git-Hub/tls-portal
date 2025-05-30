@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ClientIntakeForm from './ClientIntakeForm';
+import AsyncErrorBoundary from './AsyncErrorBoundary';
 
 export default function HireUsPage() {
   return (
@@ -49,7 +50,9 @@ export default function HireUsPage() {
           </div>
 
           {/* Form */}
-          <ClientIntakeForm />
+          <AsyncErrorBoundary>
+            <ClientIntakeForm />
+          </AsyncErrorBoundary>
 
           {/* Trust Indicators */}
           <div className="mt-12 text-center">

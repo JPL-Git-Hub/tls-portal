@@ -16,6 +16,8 @@
     "dev:all": "concurrently \"yarn workspace @tls-portal/creator dev\" \"yarn workspace @tls-portal/pages dev\"",
     "dev:backend": "yarn workspace @tls-portal/creator dev",
     "dev:frontend": "yarn workspace @tls-portal/pages dev",
+    "watch:deps": "./scripts/watch-deps.sh",
+    "dev:auto": "concurrently \"yarn watch:deps\" \"yarn dev\"",
     "build": "yarn workspaces run build",
     "test": "yarn workspaces run test",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
@@ -35,6 +37,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "nodemon": "^3.1.10",
     "prettier": "^3.2.4",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
