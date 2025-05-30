@@ -10,6 +10,7 @@ import {
   generateUniqueSubdomain,
   Client 
 } from '@tls-portal/shared';
+import { sendClientWelcomeEmail, sendNotificationToLawyer } from '../services/emailService';
 
 export async function createClient(
   req: Request, 
@@ -73,11 +74,23 @@ export async function createClient(
       .collection('clients')
       .add(clientData);
     
-    // Return created client
-    res.status(201).json({
+    // Create full client object
+    const createdClient: Client = {
       id: docRef.id,
       ...clientData
+    };
+    
+    // Send email notifications (non-blocking)
+    Promise.all([
+      sendClientWelcomeEmail(createdClient),
+      sendNotificationToLawyer(createdClient)
+    ]).catch(error => {
+      // Log email errors but don't fail the request
+      console.error('Email notification error:', error);
     });
+    
+    // Return created client
+    res.status(201).json(createdClient);
     
   } catch (error) {
     next(error);

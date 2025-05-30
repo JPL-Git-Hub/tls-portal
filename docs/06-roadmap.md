@@ -16,8 +16,7 @@
 - **Testing Setup**: Manual test workflows and scripts
 
 ### 🚧 In Progress
-- Recent refactoring (cleanup of `second-refactor/` directory)
-- Documentation improvements in new `refactoring/` directory
+- Recent documentation restructuring (consolidated into main docs/)
 
 ### Technical Stack
 - **Frontend**: React/Vite + TypeScript

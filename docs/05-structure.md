@@ -16,8 +16,8 @@ tls-portal/
 │
 ├── 📁 config/                   # Environment and configuration management
 │   ├── README.md                # Main config documentation
-│   ├── README-config-variables.md # Environment variables documentation
-│   ├── README-cloudflare.md     # Cloudflare setup documentation
+│   ├── variables.md             # Environment variables documentation
+│   ├── cloudflare.md            # Cloudflare setup documentation
 │   ├── dev.env                  # Development environment variables
 │   ├── prod.env                 # Production environment variables
 │   ├── env.template             # Template for environment files
@@ -118,36 +118,29 @@ tls-portal/
 │       └── utils.sh             # General utilities
 │
 ├── 📁 docs/                     # Project documentation
-│   ├── 📋 Core Documentation
-│   │   ├── 00-agentic-coding-axioms.md  # Development principles
-│   │   ├── 03-tech-stack.md             # Technology stack overview
-│   │   ├── 01-setup.md                  # Setup instructions
-│   │   ├── 02-development-guide.md      # Development workflow
-│   │   ├── tls-portal-deployment.md     # Deployment guide
-│   │   ├── shell-scripts-guide.md       # Scripts documentation
-│   │   └── client-types-and-firestore-guide.md # Data model guide
+│   ├── 📁 agentic-coding/       # Agentic development practices
+│   │   ├── 00-axioms.md         # Core development principles
+│   │   ├── 01-conventions.md    # Coding conventions
+│   │   ├── 02-refactoring-patterns.md # Refactoring patterns
+│   │   └── anti-patterns-archive.md # What NOT to do (examples)
 │   │
-│   ├── 📁 archive/              # Archived documentation
-│   │   ├── conversation-summary-2024-01-29-1620.md
-│   │   └── node-modules-analysis-original.md
+│   ├── 📁 guides/               # Technical guides
+│   │   └── node-modules-guide.md # Node modules management
 │   │
-│   ├── 📁 features/             # Feature-specific documentation
+│   ├── 📋 Project Documentation
+│   │   ├── 01-overview.md        # Project overview
+│   │   ├── 02-tech-stack.md      # Technology stack
+│   │   ├── 03-development.md     # Development guide
+│   │   ├── 04-deployment.md      # Deployment strategy
+│   │   ├── 05-structure.md       # Repository structure
+│   │   └── 06-roadmap.md         # Project roadmap
+│   │
+│   ├── 📁 services/              # Service-specific documentation
+│   │   ├── client-types-and-firestore-guide.md # Data model guide
 │   │   └── portal-subdomain-generation.md # Subdomain feature docs
 │   │
-│   ├── 📁 integrations/         # Integration guides
-│   │   └── claude-github-app.md # Claude GitHub app integration
-│   │
-│   └── 📁 testing/              # Testing documentation
-│       ├── test-form.md         # Test form documentation
-│       └── test-workflow.md     # Test workflow guide
-│
-├── 📁 refactoring/              # Refactoring guides and patterns
-│   ├── 0.readme.md              # Refactoring overview
-│   ├── 1.refactoring-guide.md   # Step-by-step guide
-│   ├── 2.implementation-patterns.md # Code patterns
-│   ├── 3.example-complex-refactor-archive.md # Examples
-│   ├── 5.node-modules-guide.md  # Node modules management
-│   └── project-status-roadmap.md # Project roadmap
+│   └── 📁 integrations/         # Integration guides
+│       └── claude-github-app.md # Claude GitHub app integration
 │
 ├── 🧪 Test Files
 │   ├── test-client-creation.js  # Client creation tests
@@ -185,9 +178,11 @@ tls-portal/
 - Clear separation between init, dev, and deployment scripts
 
 ### Documentation Structure
-- Core docs in root of `/docs`
-- Specialized subdirectories for archive, features, integrations, and testing
-- Refactoring guides separate for focused improvement efforts
+- Core project docs in root of `/docs`
+- Agentic coding practices organized in `/docs/agentic-coding`
+- Technical guides organized in `/docs/guides`
+- Service-specific docs in `/docs/services`
+- Integration guides in `/docs/integrations`
 
 ### Development Workflow
 - Firebase emulators for local development

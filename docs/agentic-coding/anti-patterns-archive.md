@@ -88,7 +88,7 @@ rm -rf dist/ src/*/dist/ node_modules/.vite/
 ### Extract from High-Change Files
 
 **From `scripts/deploy.sh` (4 changes):**
-Document in `docs/08-script-development-guide.md`:
+Document in `docs/script-development-patterns.md`:
 ```markdown
 ## Deployment Evolution Patterns
 
@@ -108,7 +108,7 @@ Document in `docs/08-script-development-guide.md`:
 ```
 
 **From `src/creator/src/server.ts` (3 changes):**
-Document in `docs/07-local-development-guide.md`:
+Document in `docs/development-patterns.md`:
 ```markdown
 ## Server Configuration Patterns
 
@@ -128,7 +128,7 @@ Document in `docs/07-local-development-guide.md`:
 ```
 
 **From `src/creator/src/config/firebase.ts` (3 changes):**
-Document in `docs/07-local-development-guide.md`:
+Document in `docs/development-patterns.md`:
 ```markdown
 ## Firebase Configuration Patterns
 

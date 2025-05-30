@@ -20,7 +20,7 @@ All modules communicate via direct imports within the monolith, maintaining clea
 
 ### Technology Stack
 
-See [03-tech-stack.md](03-tech-stack.md) for detailed technology decisions and architecture.
+See [02-tech-stack.md](02-tech-stack.md) for detailed technology decisions and architecture.
 
 **Key versions in use:**
 - TypeScript: 5.3.3
@@ -30,7 +30,7 @@ See [03-tech-stack.md](03-tech-stack.md) for detailed technology decisions and a
 
 ## Setup
 
-See [01-setup.md](01-setup.md) for complete installation instructions, prerequisites, and troubleshooting.
+See [03-development.md](03-development.md) for complete installation instructions, prerequisites, and troubleshooting.
 
 ## Key Features
 
@@ -96,7 +96,7 @@ yarn build         # Production build
 yarn docker:build  # Container image
 ```
 
-See [tls-portal-setup-guide.md](tls-portal-setup-guide.md#available-scripts) for additional scripts and commands.
+See [03-development.md](03-development.md#available-scripts) for additional scripts and commands.
 
 ### Package Management
 
@@ -130,7 +130,7 @@ yarn eslint .     # NOT: npx eslint .
 
 ### Environment Variables
 
-See [Configuration Documentation](../config/README-config-variables.md) for configuration details.
+See [Configuration Documentation](../config/README.md) for configuration details.
 
 ### Yarn Configuration
 
@@ -273,7 +273,7 @@ The compression middleware is temporarily disabled due to TypeScript compatibili
 
 ## References
 
-- [Tech Stack Documentation](03-tech-stack.md)
-- [Setup Instructions](01-setup.md)
-- [Environment Configuration](../config/README-config-variables.md)
-- [Project Structure](project-structure-current.md)
+- [Tech Stack Documentation](02-tech-stack.md)
+- [Development Guide](03-development.md)
+- [Environment Configuration](../config/README.md)
+- [Project Structure](05-structure.md)

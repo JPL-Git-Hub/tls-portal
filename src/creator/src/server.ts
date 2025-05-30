@@ -9,6 +9,7 @@ import compression from 'compression';
 import dotenv from 'dotenv';
 import path from 'path';
 import { initializeFirebase } from './config/firebase';
+import { initializeEmailService } from './services/emailService';
 import { errorHandler } from './middleware/errorHandler';
 import { clientRoutes } from './routes/clients';
 
@@ -33,6 +34,9 @@ console.log('Environment:', {
 
 // Initialize Firebase
 initializeFirebase();
+
+// Initialize Email service
+initializeEmailService();
 
 // Create Express app
 const app = express();

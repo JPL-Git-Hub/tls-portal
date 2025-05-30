@@ -1,14 +1,9 @@
-# Agentic Refactoring Guide
+# Agentic Refactoring Patterns
 
 ## Core Principle
 **Only refactor when it makes the code simpler.** If a refactor adds complexity, abstraction, or confusion - don't do it.
 
-## Naming Standards
-- **Files and folders**: Always lowercase with hyphens (e.g., `client-controller.ts`)
-- **Code**: Follow language conventions (PascalCase for React components, camelCase for variables)
-- **No mixed naming**: Don't have `ClientController.ts` and `user-service.ts` in same project
-
-## When to Refactor (The 3 Triggers)
+## The 3 Refactoring Triggers
 
 ### 1. Pain-Driven Refactoring
 Refactor ONLY when you feel actual pain:
@@ -48,7 +43,6 @@ Write down EXACTLY what hurts:
 - "Every new endpoint copies the same 30 lines"
 
 ### Step 2: Use Git History as Evidence (10 minutes)
-Let git show you the real pain points:
 ```bash
 # Files changed most frequently (top 10)
 git log --pretty=format: --name-only | sort | uniq -c | sort -rg | head -10
@@ -60,44 +54,38 @@ git log --format='' --name-only | grep -v '^$' | sort | uniq -c | sort -nr
 git log --grep="refactor" --oneline
 ```
 
-If a file appears in 5+ commits for the same feature, it's a refactoring candidate.
-
-### Step 3: Measure Impact (5 minutes)
-Count the concrete cost:
-- How many files affected?
-- How many lines duplicated?
-- How many minutes wasted each time?
-
-### Step 4: Design Simplification (15 minutes)
+### Step 3: Design Simplification (15 minutes)
 The refactor MUST:
 - Reduce total lines of code
 - Reduce number of files
 - Make the next change easier
 - Be explainable in one sentence
 
-### Step 5: Execute in Chunks (30-minute blocks)
-- One refactor type per commit
-- Keep the app working after each commit
-- Test the specific pain point after each change
+## Essential Patterns
 
-## Refactoring Patterns for Services
+### Path Resolution Pattern
+**Problem:** Hardcoded paths break when project structure changes
+**Pattern:** Use __dirname, process.cwd(), or path.resolve() - never hardcode
+**Gotcha:** Paths differ between dev (src/) and prod (dist/)
 
-### Pattern 1: Extract Shared Logic
-**When:** Same validation/formatting in 3+ places
-**How:** Move to shared utils, not abstract classes
 ```typescript
-// Before: Copied in every service
-const formatPhone = (phone) => { /* 10 lines */ }
+// ❌ NEVER
+const config = require('/Users/john/tls-portal/config.json')
 
-// After: In shared/utils
-export { formatPhone } from '@tls-portal/shared'
+// ✅ ALWAYS
+const config = require(path.join(__dirname, '../config.json'))
+const config = require(path.resolve(process.cwd(), 'config.json'))
 ```
 
-### Pattern 2: Standardize Service Structure
-**When:** Services have different patterns
-**How:** Copy the simplest working pattern
-```typescript
-// Standard service structure (keep it boring)
+### Database Connection Pattern
+**Problem:** Service can't connect in development
+**Pattern:** Always check for emulator env vars before initializing
+**Gotcha:** Environment variables must be set BEFORE imports
+
+### Standard Service Structure
+**Problem:** Services have different patterns
+**Pattern:** Copy the simplest working pattern
+```
 src/[service-name]/
   ├── src/
   │   ├── routes/    # Express routes
@@ -107,9 +95,9 @@ src/[service-name]/
   └── package.json
 ```
 
-### Pattern 3: Consolidate Configuration
-**When:** Same config repeated across services
-**How:** Environment variables + shared config
+### Configuration Pattern
+**Problem:** Config scattered across services
+**Pattern:** Environment variables + shared config
 ```typescript
 // Before: Hardcoded in each service
 const TIMEOUT = 30000
@@ -118,10 +106,47 @@ const TIMEOUT = 30000
 const TIMEOUT = process.env.SERVICE_TIMEOUT || 30000
 ```
 
+### Error Handling Pattern
+**Problem:** Inconsistent error responses across services
+**Pattern:** Standard error middleware returns { error: string, stack?: string }
+**Gotcha:** Never expose stack traces in production
+
+### Port Configuration Pattern
+**Problem:** Hardcoded ports cause conflicts
+**Pattern:** Always use PORT env var with fallback: `process.env.PORT || 3001`
+**Gotcha:** Frontend and backend need different default ports
+
+## Script Development Patterns
+
+### Variable Naming Pattern
+**Problem:** ALL_CAPS variables confused with environment variables
+**Pattern:** Use lowercase for script-local variables, ALL_CAPS only for true env vars
+**Gotcha:** Keep $HOME, $PATH, etc. in caps - they're real env vars
+
+### Script Path Pattern
+**Problem:** Scripts break when run from different directories
+**Pattern:** Always use `SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"`
+**Gotcha:** Use BASH_SOURCE not $0 for sourced scripts
+
+### Color Output Pattern
+**Problem:** Inconsistent script output hard to read
+**Pattern:** Green=success, Yellow=warning, Red=error, use ✓ ✗ ⚠ symbols
+**Gotcha:** Always reset color with NC (no color) after colored text
+
+## Service Addition Checklist
+
+When adding new services:
+
+1. **Copy Closest Example** - Find the most similar existing service
+2. **Check for Patterns** - Use patterns documented here
+3. **Share Obvious Code** - Utils/types in shared package
+4. **Document Surprises Only** - Integration quirks, non-obvious config
+5. **Resist Abstraction** - No service base classes or clever generators
+
 ## Documentation During Refactoring
 
 ### Document Patterns, Not Code
-When refactoring reveals a pattern, document:
+When refactoring reveals a pattern:
 - **The Problem:** What pain did you hit?
 - **The Solution:** What pattern fixed it?
 - **The Gotcha:** What surprised you?
@@ -143,7 +168,7 @@ Don't document:
 
 ## Refactoring Checklist
 
-Before starting any refactor:
+Before starting:
 - [ ] Can I explain the pain in one sentence?
 - [ ] Will this reduce total complexity?
 - [ ] Can I complete it in under 4 hours?
@@ -161,32 +186,6 @@ After refactoring:
 - [ ] No new pain introduced
 - [ ] One-sentence explanation ready
 
-## Service Addition Guide
-
-When adding new services (auth, billing, etc.):
-
-### 1. Copy Closest Example
-- Find the most similar existing service
-- Copy its entire structure
-- Modify only what's different
-
-### 2. Share Obvious Code
-- Validation? → shared/utils
-- Types? → shared/types  
-- Config? → Environment variables
-
-### 3. Resist Abstraction
-- No service base classes
-- No plugin architectures
-- No clever generators
-- Just boring, working code
-
-### 4. Document Surprises Only
-- Integration quirks
-- Non-obvious config
-- Actual gotchas hit
-- Skip the rest
-
 ## The Final Test
 
 After any refactor, you should be able to say:
@@ -194,7 +193,5 @@ After any refactor, you should be able to say:
 > "I refactored [specific thing] because [specific pain]. Now [specific improvement]. It's simpler because [fewer files/lines/steps]."
 
 If you can't fill in ALL those blanks with concrete specifics, you probably added complexity instead of removing it.
-
----
 
 **Remember:** The best refactor is the one that makes future-you say "oh, that's obvious" not "wow, that's clever".
