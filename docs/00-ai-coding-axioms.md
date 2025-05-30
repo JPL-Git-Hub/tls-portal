@@ -141,6 +141,7 @@ When working on this project:
 4. **Time-box everything** to 30-minute chunks
 5. **If explaining takes longer than coding**, it's too complex
 6. **Keep file names lowercase** with hyphens
+7. **Don't create README docs just because you did work** - The git history shows what happened. Only create documentation that adds value beyond what's already evident in the code and structure
 
 ### Good AI Responses:
 - "Let's just move these 3 files and update the imports."

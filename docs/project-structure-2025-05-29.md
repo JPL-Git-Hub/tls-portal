@@ -8,25 +8,25 @@ tls-portal/
 │   ├── prod.env                # Production values (real URLs, live APIs, debug=false)
 │   └── secrets-values.template # Template for managing secrets in Google Secrets Manager
 │
-├── docs/         						   
-│   ├── 00-agentic_coding_philosophy.md    # ai coding principles
-│   ├── 00-project-overview.md             # project overview
-│   ├── 01-setup.md                        # initial setup
-│   ├── 02-development-guide.md            # development workflow
-│   ├── 03-tech-stack.md                   # technology stack
-│   ├── 04-environment-variables.md        # config variables and secrets
-│   ├── 05-deployment-strategy.md          # deployment strategy
-│   ├── 06-subdomain-generation-guide.md   # subdomain generation
-│   ├── 07-local-development-guide.md      # local development
-│   ├── 08-script-development-guide.md     # scripts development
-│   ├── 09-claude-github-app-guide.md      # CC-GitHub integr
-│   ├── 10-node-modules-analysis.md        # node modules
-│   ├── 11-project-ready-checklist.md      # project readiness
-│   ├── 12-cloudflare-setup.md             # Cloudflare config
-│   ├── conversation-summary-2024-01-29-1620.md 	# Other
-│   ├── node-modules-analysis.md				 	# Other
-│   ├── test-form.md								# Other
-│   └── test-workflow.md							# Other
+├── docs/         					
+│   ├── 00-agentic-coding-axions.md		# important, perhaps make like religion to the ai
+│   ├── 00-project-overview.md  •  proj overview (generic title)
+│   ├── 01-setup.md             •  proj setup (generic title)
+│   ├── 02-development-guide.md •  proj dev (generic title)
+│   ├── 03-tech-stack.md              # important for agent
+│   ├── 04-environment-variables.md   •  better in config folder?
+│   ├── 05-deployment-strategy.md       •  proj deploy  (generic title)
+│   ├── 06-subdomain-generation-guide.md   # portal creation serv? where to be
+│   ├── 07-local-development-guide.md     •  local dev  (generic title)
+│   ├── 08-script-development-guide.md    •  scripts dev  (generic title)
+│   ├── 09-claude-github-app-guide.md      # CC-GitHub integr - useful.  are there other integrations of interest?
+│   ├── 10-node-modules-analysis.md        •  archive (duplicate)
+│   ├── 11-project-ready-checklist.md      # proj readiness  (generic title)
+│   ├── 12-cloudflare-setup.md             # Cloudflare config (should this be in config folder?)
+│   ├── conversation-summary-2024-01-29-1620.md 	# archive
+│   ├── node-modules-analysis.md				 	# archive  (duplicate)
+│   ├── test-form.md								# Test
+│   └── test-workflow.md							# Test
 │
 ├── refactoring/                
 │   ├── 0.readme.md                     # refactoring
