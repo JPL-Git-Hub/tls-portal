@@ -7,7 +7,9 @@
 ./docs/06-subdomain-generation-guide.md
 ./docs/07-local-development-guide.md
 ./docs/08-script-development-guide.md
+./docs/conversation-summary-2024-01-29-1620.md
+./docs/node-modules-analysis.md
+./docs/test-form.md
+./docs/test-workflow.md
 ./README.md
 ./READY.md
-./test-form.md
-./test-workflow.md
