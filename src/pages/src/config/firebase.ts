@@ -6,6 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -24,6 +25,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export const functions = getFunctions(app);
 
 // Connect to emulators in development
 if (import.meta.env.DEV) {
@@ -42,6 +44,12 @@ if (import.meta.env.DEV) {
   // @ts-ignore - _delegate is private but we need to check
   if (!storage._delegate?._host?.includes('localhost')) {
     connectStorageEmulator(storage, 'localhost', 9199);
+  }
+  
+  // Check if Functions is already connected to emulator
+  // @ts-ignore - _delegate is private but we need to check
+  if (!functions._delegate?._url?.includes('localhost')) {
+    connectFunctionsEmulator(functions, 'localhost', 5001);
   }
   
   console.log('Firebase connected to local emulators');

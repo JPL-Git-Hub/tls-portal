@@ -2,6 +2,7 @@ interface LoadingSpinnerProps {
   size?: 'small' | 'medium' | 'large';
   text?: string;
   fullScreen?: boolean;
+  className?: string;
 }
 
 export default function LoadingSpinner({ 
