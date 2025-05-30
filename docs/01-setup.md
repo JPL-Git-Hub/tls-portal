@@ -271,8 +271,8 @@ The Claude GitHub App provides AI-powered code reviews and development assistanc
 
 2. **Configure GitHub Repository**:
    ```bash
-   # Authenticate with GitHub
-   gh auth login
+   # GitHub CLI uses token from environment
+   export GH_TOKEN=$(gcloud secrets versions access latest --secret=github-token)
    
    # Set up repository (if not already done)
    git remote add origin https://github.com/YOUR_USERNAME/tls-portal.git

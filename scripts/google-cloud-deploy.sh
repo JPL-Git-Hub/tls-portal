@@ -14,9 +14,9 @@ source "$script_dir/lib/config.sh"
 source "$script_dir/lib/gcloud.sh"
 
 # Configuration
-PROD_PROJECT="tls-portal-prod"
-REGION="us-central1"
-SERVICE_NAME="tls-portal"
+PROD_PROJECT="$DEFAULT_FIREBASE_PROJECT"
+REGION="$DEFAULT_REGION"
+SERVICE_NAME="$PROJECT_NAME"
 
 # Setup gcloud
 if ! setup_gcloud; then
@@ -92,12 +92,12 @@ deploy_production() {
         --project $PROD_PROJECT \
         --allow-unauthenticated \
         --service-account="$SERVICE_NAME@$PROD_PROJECT.iam.gserviceaccount.com" \
-        --min-instances 1 \
-        --max-instances 100 \
-        --set-env-vars="NODE_ENV=production,FIREBASE_PROJECT_ID=$PROD_PROJECT,DOMAIN=thelawshop.com" \
+        --min-instances $DEFAULT_MIN_INSTANCES \
+        --max-instances $DEFAULT_MAX_INSTANCES \
+        --set-env-vars="NODE_ENV=production,FIREBASE_PROJECT_ID=$PROD_PROJECT,DOMAIN=$PORTAL_SUBDOMAIN.$PRIMARY_DOMAIN" \
         --set-secrets="FIREBASE_SERVICE_ACCOUNT=firebase-service-account:latest" \
-        --memory=512Mi \
-        --cpu=1 \
+        --memory=$DEFAULT_MEMORY \
+        --cpu=$DEFAULT_CPU \
         || die "Cloud Run deployment failed"
     
     # Get service URL
@@ -108,7 +108,12 @@ deploy_production() {
         --format 'value(status.url)')
     
     log_success "Deployed to production: $service_url"
-    log_info "Remember to update Cloudflare DNS if needed"
+    
+    # Update Cloudflare DNS
+    if [ -f "$script_dir/update-cloudflare-dns.sh" ]; then
+        log_info "Updating Cloudflare DNS..."
+        "$script_dir/update-cloudflare-dns.sh" "$service_url" || log_warn "Cloudflare update failed, but deployment succeeded"
+    fi
 }
 
 # Health check

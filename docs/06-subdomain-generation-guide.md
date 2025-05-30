@@ -177,7 +177,7 @@ When storing client data, include the generated subdomain:
     email: 'john.smith@example.com',
     mobile: '(212) 555-1234'
   },
-  portalUrl: 'https://smit1234.thelawshop.com',
+  portalUrl: 'https://smit1234.portal.thelawshop.com',
   status: 'active'
 }
 ```

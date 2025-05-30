@@ -92,7 +92,8 @@ GOOGLE_CLOUD_PROJECT=tls-portal-prod
 
 1. **Domain Setup**
    - Point `thelawshop.com` to Cloudflare nameservers
-   - Configure wildcard subdomain (`*.thelawshop.com`) to point to Cloud Run load balancer
+   - Configure portal subdomain (`portal.thelawshop.com`) to point to Cloud Run
+   - Configure wildcard subdomain (`*.portal.thelawshop.com`) for client portals
    - Enable Cloudflare proxy for DDoS protection and SSL
 
 2. **SSL/TLS Configuration**
@@ -101,9 +102,10 @@ GOOGLE_CLOUD_PROJECT=tls-portal-prod
    - Enable "Always Use HTTPS" and HSTS
 
 3. **Subdomain Routing**
-   - Wildcard DNS record: `*.thelawshop.com` → Cloud Run service IP
-   - Cloud Run handles subdomain routing via express-subdomain
-   - Each client portal accessible at `[subdomain].thelawshop.com`
+   - Portal DNS record: `portal.thelawshop.com` → Firebase Hosting (frontend)
+   - Wildcard DNS record: `*.portal.thelawshop.com` → Cloud Run (backend API)
+   - Cloud Run handles API requests from client subdomains
+   - Frontend at `portal.thelawshop.com` connects to backend APIs
 
 4. **Performance & Security**
    - Enable Cloudflare caching for static assets

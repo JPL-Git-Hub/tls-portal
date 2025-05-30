@@ -109,7 +109,7 @@ fi
 - Documentation generation tools
 - Additional package managers beyond yarn
 - Container orchestration
-- Microservice patterns
+- Separate service deployments
 - Database migration frameworks
 - ORM or query builders
 
@@ -121,8 +121,15 @@ fi
 - "over-engineered deployment pipeline"
 - "monitoring and observability framework"
 - "scalable architecture"
-- "microservices approach"
+- "distributed services"
 - "best practices" (when adding complexity)
+
+## Naming Conventions
+
+- **All lowercase** - File names and folders should be lowercase
+- **Use hyphens** - `my-file-name.md` not `MyFileName.md` 
+- **Code follows language conventions** - React components use PascalCase, variables use camelCase
+- **Environment variables** - UPPER_SNAKE_CASE as required by convention
 
 ## For AI Assistants
 
@@ -133,6 +140,7 @@ When working on this project:
 3. **Suggest inline solutions**, not abstractions
 4. **Time-box everything** to 30-minute chunks
 5. **If explaining takes longer than coding**, it's too complex
+6. **Keep file names lowercase** with hyphens
 
 ### Good AI Responses:
 - "Let's just move these 3 files and update the imports."
