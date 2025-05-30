@@ -121,19 +121,15 @@ tls-portal/
 │   ├── 📋 Core Documentation
 │   │   ├── 00-agentic-coding-axioms.md  # Development principles
 │   │   ├── 03-tech-stack.md             # Technology stack overview
-│   │   ├── tls-portal-overview.md       # Project overview
-│   │   ├── tls-portal-setup-guide.md    # Setup instructions
-│   │   ├── tls-portal-development-workflow.md # Dev workflow
+│   │   ├── 01-setup.md                  # Setup instructions
+│   │   ├── 02-development-guide.md      # Development workflow
 │   │   ├── tls-portal-deployment.md     # Deployment guide
-│   │   ├── production-readiness-checklist.md # Production checklist
 │   │   ├── shell-scripts-guide.md       # Scripts documentation
-│   │   ├── local-firebase-emulator-guide.md # Firebase emulator guide
 │   │   └── client-types-and-firestore-guide.md # Data model guide
 │   │
 │   ├── 📁 archive/              # Archived documentation
 │   │   ├── conversation-summary-2024-01-29-1620.md
-│   │   ├── node-modules-analysis-original.md
-│   │   └── project-structure-2025-05-29-archived.md
+│   │   └── node-modules-analysis-original.md
 │   │
 │   ├── 📁 features/             # Feature-specific documentation
 │   │   └── portal-subdomain-generation.md # Subdomain feature docs

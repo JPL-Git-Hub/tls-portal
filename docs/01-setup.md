@@ -27,6 +27,18 @@ cd tls-portal
 ./scripts/start-dev.sh
 ```
 
+### Quick Test
+Opens:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+- Firebase UI: http://localhost:4000
+
+Test it works:
+1. Go to http://localhost:3000
+2. Fill out the client form
+3. Submit
+4. Check Firebase UI for the data
+
 ## Prerequisites
 
 ### Required Software

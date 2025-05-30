@@ -30,7 +30,7 @@ See [03-tech-stack.md](03-tech-stack.md) for detailed technology decisions and a
 
 ## Setup
 
-See [tls-portal-setup-guide.md](tls-portal-setup-guide.md) for complete installation instructions, prerequisites, and troubleshooting.
+See [01-setup.md](01-setup.md) for complete installation instructions, prerequisites, and troubleshooting.
 
 ## Key Features
 
@@ -191,6 +191,77 @@ Deploy using standard Google Cloud commands after building and pushing the conta
 - Firestore security rules for data protection
 - Environment-based secret management
 
+## Firebase Emulator Development
+
+### Port Configuration
+
+| Service | Port | Description |
+|---------|------|-------------|
+| Frontend (React) | 3000 | Vite dev server |
+| Backend API | 3001 | Express server |
+| Firebase UI | 4000 | Emulator dashboard |
+| Firestore | 8080 | Database emulator |
+| Auth | 9099 | Authentication emulator |
+| Storage | 9199 | File storage emulator |
+
+### Emulator Features
+
+Access the emulator UI at `http://localhost:4000` to:
+- View and edit Firestore data in real-time
+- Manage test users for authentication
+- Monitor security rules evaluation
+- Import/export data for testing
+
+### Development Patterns
+
+#### Standalone HTML Testing
+Create test pages for rapid prototyping:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <script>
+        const API_URL = 'http://localhost:3001/api';
+        // Direct API testing without React build
+    </script>
+</body>
+</html>
+```
+
+#### Firebase Configuration Pattern
+```typescript
+// Automatic emulator detection
+if (process.env.FIRESTORE_EMULATOR_HOST) {
+    console.log('Using Firestore emulator');
+}
+
+// Single initialization guard
+let initialized = false;
+export function initializeFirebase() {
+    if (initialized) return;
+    // ... initialization logic
+    initialized = true;
+}
+```
+
+### Common Issues & Solutions
+
+**Port Already in Use**
+```bash
+lsof -ti:3001 | xargs kill -9  # Kill process on port
+```
+
+**Emulator Connection Failed**
+- Ensure `USE_EMULATOR=true` in environment
+- Check Firebase project ID matches
+- Verify emulator ports are free
+
+**TypeScript Compression Issue**
+The compression middleware is temporarily disabled due to TypeScript compatibility issues. This is a known issue that doesn't affect functionality.
+
 ## Next Development Phases
 
 1. **Authentication System** - Complete Firebase Auth integration
@@ -203,6 +274,6 @@ Deploy using standard Google Cloud commands after building and pushing the conta
 ## References
 
 - [Tech Stack Documentation](03-tech-stack.md)
-- [Setup Instructions](tls-portal-setup-guide.md)
+- [Setup Instructions](01-setup.md)
 - [Environment Configuration](../config/README-config-variables.md)
-- API Documentation (coming soon)
+- [Project Structure](project-structure-current.md)
