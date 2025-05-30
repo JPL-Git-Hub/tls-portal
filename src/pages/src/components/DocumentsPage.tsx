@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { DocumentService } from '../services/documentService';
 import DocumentUpload from './DocumentUpload';
+import DocumentPreview from './DocumentPreview';
 import LoadingSpinner from './LoadingSpinner';
 import type { Document, DocumentCategory, DocumentFilter } from '../types/document';
 import { formatFileSize } from '../types/document';
@@ -14,6 +15,7 @@ export default function DocumentsPage() {
   const [showUpload, setShowUpload] = useState(false);
   const [filter, setFilter] = useState<DocumentFilter>({});
   const [searchTerm, setSearchTerm] = useState('');
+  const [previewDocument, setPreviewDocument] = useState<Document | null>(null);
 
   useEffect(() => {
     if (currentUser && clientData) {
@@ -240,13 +242,19 @@ export default function DocumentsPage() {
                       </div>
                     </div>
                     <div className="ml-5 flex-shrink-0 flex items-center space-x-4">
+                      <button
+                        onClick={() => setPreviewDocument(doc)}
+                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                      >
+                        Preview
+                      </button>
                       <a
                         href={doc.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                        className="text-gray-600 hover:text-gray-800 text-sm font-medium"
                       >
-                        View
+                        Download
                       </a>
                       <button
                         onClick={() => handleDelete(doc.id)}
@@ -262,6 +270,16 @@ export default function DocumentsPage() {
           </ul>
         )}
       </div>
+
+      {/* Document Preview Modal */}
+      {previewDocument && (
+        <DocumentPreview
+          fileUrl={previewDocument.fileUrl}
+          fileName={previewDocument.fileName}
+          fileType={previewDocument.fileType}
+          onClose={() => setPreviewDocument(null)}
+        />
+      )}
     </div>
   );
 }
