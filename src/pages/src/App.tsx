@@ -6,6 +6,9 @@ import LoadingSpinner from './components/LoadingSpinner';
 import { AuthProvider } from './contexts/AuthContext';
 import { ClientProvider, useClient } from './contexts/ClientContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import { ProtectedRoute as NewProtectedRoute, AdminRoute } from './components/ProtectedRoutes';
+import { Unauthorized } from './components/Unauthorized';
+import { AdminDashboard } from './components/AdminDashboard';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import DashboardLayout from './components/DashboardLayout';
@@ -37,6 +40,7 @@ function AppRouter() {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
             
             {/* Protected portal routes */}
             <Route
@@ -67,6 +71,21 @@ function AppRouter() {
           <Route path="/" element={<HomePage />} />
           <Route path="/hire-us" element={<HireUsPage />} />
           <Route path="/hire-us.html" element={<HireUsPage />} />
+          
+          {/* Auth routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          
+          {/* Admin routes */}
+          <Route 
+            path="/admin" 
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            } 
+          />
           
           {/* Redirect portal routes to home on main domain */}
           <Route path="/portal/*" element={<Navigate to="/" replace />} />

@@ -11,11 +11,12 @@ import {
 import { auth, db } from '../config/firebase';
 import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { useClient } from './ClientContext';
-import type { Client } from '@tls-portal/shared';
+import type { Client, UserRole, UserPermission, hasPermission } from '@tls-portal/shared';
 
 interface AuthContextType {
   currentUser: User | null;
   clientData: Client | null;
+  userRole: UserRole | null;
   loading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
@@ -23,6 +24,10 @@ interface AuthContextType {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   clearError: () => void;
+  hasPermission: (permission: UserPermission) => boolean;
+  isAdmin: () => boolean;
+  isAttorney: () => boolean;
+  isSuperAdmin: () => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -42,15 +47,44 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [clientData, setClientData] = useState<Client | null>(null);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
   // Get client from subdomain context
   const { client: subdomainClient, isValidPortal } = useClient();
 
+  // Fetch user role from Firestore
+  async function fetchUserRole(user: User) {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUserRole(userData.role || 'GUEST');
+      } else {
+        // Create user document if it doesn't exist
+        const newUserDoc = {
+          email: user.email,
+          role: 'CLIENT' as UserRole,
+          permissions: [],
+          createdAt: new Date(),
+          lastLogin: new Date()
+        };
+        await setDoc(doc(db, 'users', user.uid), newUserDoc);
+        setUserRole('CLIENT');
+      }
+    } catch (err) {
+      console.error('Error fetching user role:', err);
+      setUserRole('GUEST');
+    }
+  }
+
   // Fetch client data when user is authenticated
   async function fetchClientData(user: User) {
     try {
+      // First fetch user role
+      await fetchUserRole(user);
+      
       // If we're on a client subdomain, use that client
       if (subdomainClient && isValidPortal) {
         // Verify the user belongs to this client
@@ -122,8 +156,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (subdomainClient && isValidPortal) {
         // Check if email is authorized for this client
         const authorizedEmails = [
-          subdomainClient.profile.email,
-          ...(subdomainClient.authorizedUsers || [])
+          subdomainClient.profile.email
         ];
         
         if (!authorizedEmails.includes(email)) {
@@ -178,6 +211,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       await signOut(auth);
       setClientData(null);
+      setUserRole(null);
     } catch (err: any) {
       setError('Failed to log out');
       throw err;
@@ -200,16 +234,39 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setError(null);
   }
 
+  // Role-based helper functions
+  const hasUserPermission = (permission: UserPermission): boolean => {
+    if (!userRole) return false;
+    return hasPermission(userRole, permission);
+  };
+
+  const isAdmin = (): boolean => {
+    return userRole === 'ADMIN' || userRole === 'ATTORNEY' || userRole === 'SUPERADMIN';
+  };
+
+  const isAttorney = (): boolean => {
+    return userRole === 'ATTORNEY' || userRole === 'SUPERADMIN';
+  };
+
+  const isSuperAdmin = (): boolean => {
+    return userRole === 'SUPERADMIN';
+  };
+
   const value = {
     currentUser,
     clientData,
+    userRole,
     loading,
     error,
     login,
     register,
     logout,
     resetPassword,
-    clearError
+    clearError,
+    hasPermission: hasUserPermission,
+    isAdmin,
+    isAttorney,
+    isSuperAdmin
   };
 
   return (

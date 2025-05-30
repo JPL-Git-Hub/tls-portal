@@ -4,6 +4,7 @@
 
 // Types
 export * from './types/client';
+export * from './types/user';
 
 // Utilities
 export * from './utils/subdomain';
