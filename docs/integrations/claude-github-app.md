@@ -12,7 +12,7 @@ The Claude GitHub App is like having an AI teammate review your code:
 ```bash
 # From project root
 cd tls-portal
-/install-github-app
+scripts/install-github-app
 ```
 
 Follow the prompts. Takes about 2 minutes.

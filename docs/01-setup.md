@@ -278,7 +278,7 @@ The Claude GitHub App provides AI-powered code reviews and development assistanc
    ```bash
    # From the project root
    cd tls-portal
-   /install-github-app
+   scripts/install-github-app
    ```
 
 2. **Configure GitHub Repository**:
