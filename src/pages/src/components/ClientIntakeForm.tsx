@@ -63,7 +63,7 @@ export default function ClientIntakeForm() {
     onError: (error: any) => {
       // More user-friendly error messages
       const errorMessage = error.response?.data?.error || 'We encountered an issue creating your portal. Please try again or contact support.';
-      alert(errorMessage);
+      window.alert(errorMessage);
     }
   });
 
