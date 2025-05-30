@@ -7,12 +7,18 @@ export interface ClientProfile {
   lastName: string;
   email: string;
   mobile: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface ClientMetadata {
-  source: 'web_form' | 'admin_entry' | 'import';
+  source: 'web_form' | 'admin_entry' | 'import' | 'intake_form';
+  matterType?: 'personal-injury' | 'family-law' | 'criminal-defense' | 'estate-planning' | 'business-law' | 'real-estate' | 'employment-law' | 'immigration' | 'other';
+  description?: string;
   tags: string[];
   notes?: string;
 }

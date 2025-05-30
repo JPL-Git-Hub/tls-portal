@@ -86,7 +86,24 @@ export const createClientSchema = z.object({
     ),
   email: emailSchema,
   mobile: phoneSchema,
-  source: z.enum(['web_form', 'admin_entry', 'import']).default('web_form'),
+  // Optional intake form fields
+  address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().max(2).optional(),
+  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/).optional(),
+  matterType: z.enum([
+    'personal-injury',
+    'family-law', 
+    'criminal-defense',
+    'estate-planning',
+    'business-law',
+    'real-estate',
+    'employment-law',
+    'immigration',
+    'other'
+  ]).optional(),
+  description: z.string().max(1000).optional(),
+  source: z.enum(['web_form', 'admin_entry', 'import', 'intake_form']).default('web_form'),
 });
 
 export type CreateClientDto = z.infer<typeof createClientSchema>;

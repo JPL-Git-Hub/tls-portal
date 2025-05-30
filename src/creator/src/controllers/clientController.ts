@@ -52,11 +52,17 @@ export async function createClient(
         lastName: validatedData.lastName,
         email: validatedData.email,
         mobile: validatedData.mobile,
+        address: validatedData.address,
+        city: validatedData.city,
+        state: validatedData.state,
+        zipCode: validatedData.zipCode,
         createdAt: now,
         updatedAt: now
       },
       metadata: {
         source: validatedData.source || 'web_form',
+        matterType: validatedData.matterType,
+        description: validatedData.description,
         tags: []
       },
       status: 'active',
