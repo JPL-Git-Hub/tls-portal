@@ -1,82 +1,82 @@
 # TLS Portal Project Structure
 
-```
+
 tls-portal/
-├── config/                                 # Environment configuration files
-│   ├── dev.env                            # Development environment variables
-│   ├── env.template                       # Template for environment files
-│   ├── prod.env                           # Production environment variables
-│   └── secrets-values.template            # Template for secrets configuration
+├── config/       # environmental config files
+│   ├── dev.env   # environmental var for development
+│   ├── env.template  # environmental files templ
+│   ├── prod.env      # environmental var for production 
+│   └── secrets-values.template # secrets config templ
 │
-├── docs/                                  # Project documentation
-│   ├── 00-agentic_coding_philosophy.md    # Coding philosophy guide
-│   ├── 00-project-overview.md             # Overall project overview
-│   ├── 01-setup.md                        # Initial setup guide
-│   ├── 02-development-guide.md            # Development workflow guide
-│   ├── 03-tech-stack.md                   # Technology stack documentation
-│   ├── 04-environment-variables.md        # Environment variables guide
-│   ├── 05-deployment-strategy.md          # Deployment strategy documentation
-│   ├── 06-subdomain-generation-guide.md   # Subdomain generation guide
-│   ├── 07-local-development-guide.md      # Local development setup
-│   ├── 08-script-development-guide.md     # Scripts development guide
-│   ├── 09-claude-github-app-guide.md      # Claude GitHub app integration
-│   ├── 10-node-modules-analysis.md        # Node modules analysis
-│   ├── 11-project-ready-checklist.md      # Project readiness checklist
-│   ├── 12-cloudflare-setup.md             # Cloudflare configuration guide
-│   ├── conversation-summary-2024-01-29-1620.md
-│   ├── node-modules-analysis.md
-│   ├── test-form.md
-│   └── test-workflow.md
+├── docs/         						   # project docs
+│   ├── 00-agentic_coding_philosophy.md    # ai coding principles
+│   ├── 00-project-overview.md             # project overview
+│   ├── 01-setup.md                        # initial setup
+│   ├── 02-development-guide.md            # development workflow
+│   ├── 03-tech-stack.md                   # technology stack
+│   ├── 04-environment-variables.md        # environmental var
+│   ├── 05-deployment-strategy.md          # deployment strategy
+│   ├── 06-subdomain-generation-guide.md   # subdomain generation
+│   ├── 07-local-development-guide.md      # local development
+│   ├── 08-script-development-guide.md     # scripts development
+│   ├── 09-claude-github-app-guide.md      # CC-GitHub integr
+│   ├── 10-node-modules-analysis.md        # node modules
+│   ├── 11-project-ready-checklist.md      # project readiness
+│   ├── 12-cloudflare-setup.md             # Cloudflare config
+│   ├── conversation-summary-2024-01-29-1620.md 	# Other
+│   ├── node-modules-analysis.md				 	# Other
+│   ├── test-form.md								# Other
+│   └── test-workflow.md							# Other
 │
-├── refactoring/                           # Refactoring guides and patterns
-│   ├── 0.readme.md                        # Refactoring overview
-│   ├── 1.refactoring-guide.md             # General refactoring guide
-│   ├── 2.implementation-patterns.md       # Implementation patterns
-│   ├── 3.example-complex-refactor-archive.md
-│   ├── 5.node-modules-guide.md            # Node modules guide
-│   └── project-status-roadmap.md          # Project status and roadmap
+├── refactoring/                
+│   ├── 0.readme.md                     # refactoring
+│   ├── 1.refactoring-guide.md          # refactoring
+│   ├── 2.implementation-patterns.md    # refactoring patterns
+│   ├── 3.poorly-done-refactor example.md 	# what not to do
+│   ├── node-modules-guide.md            	• move to docs
+│   └── project-status-roadmap.md          	# Project roadmap
 │
-├── scripts/                               # Build and deployment scripts
-│   ├── lib/                               # Script utilities library
-│   │   ├── check-yarn-only.js             # Yarn enforcement script
-│   │   ├── colors.sh                      # Terminal color utilities
-│   │   ├── config.sh                      # Configuration utilities
-│   │   ├── connections.sh                 # Connection test utilities
-│   │   ├── gcloud.sh                      # Google Cloud utilities
-│   │   ├── java.sh                        # Java-related utilities
-│   │   ├── process-utils.sh               # Process management utilities
-│   │   └── utils.sh                       # General utilities
+├── scripts/            			# build and deploy
+│   ├── lib/            			# util library
+│   │   ├── check-yarn-only.js      # Yarn enforcement
+│   │   ├── colors.sh               # terminal color
+│   │   ├── config.sh               # config
+│   │   ├── connections.sh          # connection test
+│   │   ├── gcloud.sh               # Google Cloud
+│   │   ├── java.sh                 # Java
+│   │   ├── process-utils.sh        # process management
+│   │   └── utils.sh                # general
 │   │
-│   ├── check-cli-prerequisites.sh         # Check CLI tool requirements
-│   ├── check-dev-status.sh                # Check development environment
-│   ├── check-tech-stack.sh                # Verify tech stack installation
-│   ├── clean-deps.sh                      # Clean dependencies
-│   ├── firebase-dev-env.sh                # Firebase dev environment setup
-│   ├── firebase-hosting-deploy.sh         # Deploy to Firebase hosting
-│   ├── google-cloud-deploy.sh             # Deploy to Google Cloud
-│   ├── init-all.sh                        # Initialize all modules
-│   ├── init-base-config.sh                # Initialize base configuration
-│   ├── init-dev-tools.sh                  # Setup development tools
-│   ├── init-docker.sh                     # Initialize Docker configuration
-│   ├── init-env-config.sh                 # Setup environment configuration
-│   ├── init-firebase.sh                   # Initialize Firebase
-│   ├── init-module-creator.sh             # Setup creator module
-│   ├── init-module-pages.sh               # Setup pages module
-│   ├── init-module-shared.sh              # Setup shared module
-│   ├── init-structure.sh                  # Create project structure
-│   ├── stop-dev.sh                        # Stop development servers
-│   ├── sync-all-secrets.sh                # Sync all secrets
-│   ├── sync-secrets.sh                    # Sync specific secrets
-│   ├── update-cloudflare-dns.sh           # Update Cloudflare DNS
-│   └── yarn-quiet.sh                      # Quiet yarn wrapper
+│   ├── check-cli-prerequisites.sh  # check CLI tools
+│   ├── check-dev-status.sh         # check dev environment
+│   ├── check-tech-stack.sh         # check tech stack install
+│   ├── clean-deps.sh               # clean dependencies
+│   ├── firebase-dev-env.sh         # start FB local dev env
+│   ├── firebase-hosting-deploy.sh  # start FB hosting
+│   ├── google-cloud-deploy.sh      # start Google Cloud deploy
+│   ├── init-all.sh                 # start all modules
+│   ├── init-base-config.sh         # start base config
+│   ├── init-dev-tools.sh           # setup development tools
+│   ├── init-docker.sh              # start Docker config
+│   ├── init-env-config.sh          # setup environment config
+│   ├── init-firebase.sh            # start Firebase
+│   ├── init-module-creator.sh      # Setup creator module
+│   ├── init-module-pages.sh        # Setup pages module
+│   ├── init-module-shared.sh       # Setup shared module
+│   ├── init-structure.sh           # Create project structure
+│   ├── stop-dev.sh                 # Stop development servers
+│   ├── sync-all-secrets.sh         # Sync all secrets
+│   ├── sync-secrets.sh             # Sync specific secrets
+│   ├── update-cloudflare-dns.sh    # Update Cloudflare DNS
+│   └── yarn-quiet.sh               # Quiet yarn wrapper
 │
-├── src/                                   # Source code (monorepo structure)
-│   ├── creator/                           # Backend API service
+├── src/                       		# src code (monorepo)
+│   ├── creator/                    # backend API services
 │   │   ├── src/
 │   │   │   ├── config/
-│   │   │   │   └── firebase.ts            # Firebase configuration
+│   │   │   │   └── firebase.ts     # FB config
 │   │   │   ├── controllers/
-│   │   │   │   └── clientController.ts    # Client controller logic
+│   │   │   │   └── clientController.ts  # Client controller logic
 │   │   │   ├── middleware/
 │   │   │   │   └── errorHandler.ts        # Error handling middleware
 │   │   │   ├── routes/
@@ -139,7 +139,6 @@ tls-portal/
 ├── test-frontend.sh                       # Frontend test script
 ├── tsconfig.json                          # Root TypeScript config
 └── yarn.lock                              # Yarn lock file
-```
 
 ## Project Structure Overview
 
