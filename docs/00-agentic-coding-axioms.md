@@ -20,7 +20,7 @@ This project follows an **intentionally lightweight and clean architecture that 
 - Single, clear purpose
 - No new dependencies needed
 - Follows existing project patterns
-- Can be done in 30 minutes to 4 hours
+- Can be implemented in one focused session
 
 **Exception for Init Scripts:** Initialization scripts that create complete, working modules may exceed 100 lines when breaking them apart would create unnecessary orchestration complexity. The goal is working functionality, not arbitrary line limits. A 200-line script that gives you a complete working backend is simpler than three 70-line scripts that must be run in sequence.
 
@@ -37,7 +37,7 @@ This project follows an **intentionally lightweight and clean architecture that 
 **Before suggesting ANY improvement, ask:**
 1. Does this add complexity? (If yes → reject)
 2. Does this require new tools? (If yes → reject)
-3. Takes more than 4 hours? (If yes → reject)
+3. Requires multiple work sessions? (If yes → reject)
 4. Would a junior understand immediately? (If no → reject)
 
 ## Production Requirements
@@ -138,10 +138,10 @@ When working on this project:
 1. **Default to "no"** for new suggestions
 2. **Look for existing patterns first** - we probably already have a simple solution
 3. **Suggest inline solutions**, not abstractions
-4. **Time-box everything** to 30-minute chunks
+4. **Keep solutions focused** - If it feels like a multi-day project, it's too complex
 5. **If explaining takes longer than coding**, it's too complex
 6. **Keep file names lowercase** with hyphens
-7. **Don't create README docs just because you did work** - The git history shows what happened. Only create documentation that adds value beyond what's already evident in the code and structure
+7. **Don't create README docs just because you did work** - The git history already shows how the organization transpired. Users need the end result, not a play-by-play. Only create documentation that explains or leverages the structure in ways not evident from the code itself. Before creating any README, ask: "Does this add value beyond what's already visible in the files and folders?"
 
 ### Good AI Responses:
 - "Let's just move these 3 files and update the imports."
@@ -163,7 +163,7 @@ When working on this project:
 ## Success Metrics
 
 A good solution in this project:
-- ✓ Can be implemented in one sitting (30 min - 4 hours)
+- ✓ Can be implemented in one focused session (AI estimates are pessimistic - what AI calls "30 minutes" is often 5-10 minutes in practice)
 - ✓ Requires zero additional documentation
 - ✓ Uses only existing dependencies
 - ✓ Follows established patterns from the codebase
