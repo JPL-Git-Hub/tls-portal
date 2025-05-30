@@ -13,6 +13,19 @@ This project follows an **intentionally lightweight and clean architecture that 
 - **Single Responsibility** - Each piece does one thing well
 - **30-Minute Chunks** - Everything should be achievable in focused bursts
 
+## Core Development Principles
+
+> *These axioms represent the fundamental beliefs that guide every decision in this project. They exist to preserve the integrity and simplicity that makes this codebase maintainable and reliable.*
+
+> *These are not mere preferences—they are the foundational philosophy that defines how we build software. When faced with any technical choice, these principles provide the answer.*
+
+> *Adherence to these tenets ensures the code remains approachable, the architecture stays clean, and the project fulfills its mission of elegant simplicity.*
+
+**The Three Pillars:**
+1. **Simplicity Above All** - Complexity is the enemy
+2. **Use What Exists** - New tools create new problems  
+3. **Immediate Understanding** - Code should explain itself
+
 ## Quick Decision Guide
 
 ### ✅ Green Light - Go Ahead If:
@@ -112,6 +125,9 @@ fi
 - Separate service deployments
 - Database migration frameworks
 - ORM or query builders
+- **Text processing tools beyond basic commands** (sed, awk, perl one-liners, regex scripts) - These are cryptic, dangerous for file modification, and violate the "junior developer understanding" test. Use manual editing, VS Code find/replace, or simple bash commands instead
+
+**Context**: sed commands can irreversibly damage files with subtle syntax errors, making them unsuitable for a safety-first development approach.
 
 ### Violation Phrases to Avoid:
 - "comprehensive testing strategy"
