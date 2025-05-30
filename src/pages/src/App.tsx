@@ -9,6 +9,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import DashboardLayout from './components/DashboardLayout';
 import DashboardPage from './components/DashboardPage';
+import DocumentsPage from './components/DocumentsPage';
 
 // Lazy load the HireUs page for better initial load performance
 const HireUsPage = lazy(() => import('./components/HireUsPage'));
@@ -40,7 +41,8 @@ function App() {
               >
                 <Route index element={<Navigate to="/portal/dashboard" replace />} />
                 <Route path="dashboard" element={<DashboardPage />} />
-                {/* Future routes: documents, messages, profile */}
+                <Route path="documents" element={<DocumentsPage />} />
+                {/* Future routes: messages, profile */}
               </Route>
               
               {/* Redirect /portal to /portal/dashboard */}
