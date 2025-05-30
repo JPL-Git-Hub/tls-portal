@@ -123,7 +123,8 @@ build/
 *.log
 .env
 .env.*
-!.env.example
+config/*.env
+!config/env.template
 
 # IDE
 .vscode/

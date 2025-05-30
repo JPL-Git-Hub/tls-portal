@@ -1,10 +1,10 @@
-# Environment Variables & Secrets Management Strategy
+# Configuration Variables & Secrets Management Strategy
 
 ## Architecture
 
 ### Production Environment
 - **Google Secrets Manager**: Centralized storage for all sensitive credentials with versioning and audit capabilities
-- **Cloud Run**: Seamlessly injects secrets as environment variables at runtime
+- **Cloud Run**: Seamlessly injects secrets as configuration variables at runtime
 - **Firebase**: Leverages service account authentication for secure access
 
 ### Development Environment  
@@ -16,11 +16,11 @@
 
 The project uses a layered approach to environment configuration:
 
-- **`.env.example`**: Committed template showing all required variables with safe placeholder values
-- **`.env`**: Local development file created from the example (git-ignored)
-- **`config/environments/`**: Environment-specific configurations for different deployment stages
+- **`config/env.template`**: Committed template showing all required variables with safe placeholder values
+- **`config/dev.env`**: Development configuration values (git-ignored)
+- **`config/prod.env`**: Production configuration values (git-ignored)
 
-## Environment Variable Categories
+## Configuration Variable Categories
 
 ### Public Configuration
 These values are safe to include in templates and documentation:

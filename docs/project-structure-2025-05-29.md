@@ -14,7 +14,7 @@ tls-portal/
 │   ├── 01-setup.md                        # initial setup
 │   ├── 02-development-guide.md            # development workflow
 │   ├── 03-tech-stack.md                   # technology stack
-│   ├── 04-environment-variables.md        # environmental var
+│   ├── 04-environment-variables.md        # config variables and secrets
 │   ├── 05-deployment-strategy.md          # deployment strategy
 │   ├── 06-subdomain-generation-guide.md   # subdomain generation
 │   ├── 07-local-development-guide.md      # local development
